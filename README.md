@@ -1,357 +1,338 @@
-# 免费 LLM API 目录
+# 免费测试 LLM API
 
-> 官方 + 主流推理平台 · **仅永久免费档** · 结构化数据驱动
+> 收集 **可直接粘贴使用** 的免费测试接口：`LLM_BASE_URL` + `LLM_MODEL_NAME`
+>
+> 形态对齐 [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)
 
-[English](./README.en.md) · 数据源 [`data/providers.yaml`](./data/providers.yaml) · 上次数据更新：`2026-07-15`
+[English](./README.en.md) · 数据源 [`data/endpoints.yaml`](./data/endpoints.yaml) · 更新：`2026-07-15`
 
-## 这是什么
+## 这是什么 / 不是什么
 
-收集并维护**可公开申请**的 LLM HTTP API，条件是：
+| ✅ 我们收录 | ❌ 我们不收录 |
+| --- | --- |
+| 开源项目为 Demo 提供的 **官方测试接口** | 非官方反代 / 盗 Key / 爬聊天网页 |
+| **无需注册** 的公开免费端点 | 仅有网页 Chat、没有 HTTP API |
+| 零成本拿 Key 就能测的 **OpenAI 兼容** 端点 | 纯营销「送额度」却无稳定测试入口说明 |
+| 每条都给出 **可复制 env** | 生产级 SLA 承诺（我们不承诺） |
 
-- 仅收录提供持续可用免费档的模型厂商官方 API 与主流推理平台；排除一次性试用额度与非官方反代。
-- 有官方文档与申请入口
-- **不包含**一次性试用额度、非官方反代、聊天网页扒接口
+**定位**：免费测试用 LLM API 端点（BASE_URL + MODEL 可复制），非「注册领永久 free tier」平台清单。
 
-## 免责声明
+**免责声明**：多数端点仅供技术评估；可能随时限流、变更或下线。禁止生产、禁止输入敏感数据。请遵守各项目使用条款。
 
-- 配额、模型列表、服务条款**随时可能变更**，请以各服务商官网为准。
-- 本仓库只做信息整理，不提供代理、Key 共享或绕过限制的方法。
-- 使用前请阅读各厂商 ToS（商业用途、数据训练、地区限制等）。
-- 请合理使用免费档，避免滥用导致社区失去这些资源。
+## 总览（11）
 
-## 总览（19）
-
-| 名称 | 类型 | 地区 | OpenAI 兼容 | 需绑卡 | 状态 | 文档 |
+| 名称 | 类别 | 地区 | 需 Key | OpenAI 兼容 | 状态 | 文档 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Aion Labs](https://www.aionlabs.ai) | 模型厂商 | IL | 是 | 否 | ✅ active | [docs](https://www.aionlabs.ai) |
-| [Cohere](https://cohere.com) | 模型厂商 | CA | 否 | 否 | ✅ active | [docs](https://docs.cohere.com/) |
-| [Google AI Studio（Gemini）](https://aistudio.google.com) | 模型厂商 | US | 是 | 否 | ✅ active | [docs](https://ai.google.dev/gemini-api/docs) |
-| [Mistral AI（La Plateforme）](https://console.mistral.ai/) | 模型厂商 | FR | 是 | 否 | ✅ active | [docs](https://docs.mistral.ai/) |
-| [智谱 Z.AI（BigModel）](https://open.bigmodel.cn/) | 模型厂商 | CN | 是 | 否 | ✅ active | [docs](https://docs.bigmodel.cn/) |
-| [Cerebras Inference](https://cloud.cerebras.ai/) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://inference-docs.cerebras.ai/) |
-| [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) | 推理平台 | US | 否 | 否 | ✅ active | [docs](https://developers.cloudflare.com/workers-ai/) |
-| [GitHub Models](https://github.com/marketplace/models) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://docs.github.com/en/github-models) |
-| [Groq](https://console.groq.com) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://console.groq.com/docs) |
-| [Hugging Face Inference Providers](https://huggingface.co) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://huggingface.co/docs/inference-providers) |
-| [LLM7.io](https://llm7.io) | 推理平台 | GB | 是 | 否 | ⚠️ limited | [docs](https://llm7.io) |
-| [魔搭 ModelScope API-Inference](https://modelscope.cn) | 推理平台 | CN | 是 | 否 | ✅ active | [docs](https://modelscope.cn/docs/model-service/API-Inference/intro) |
-| [NVIDIA NIM](https://build.nvidia.com/explore/discover) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://docs.api.nvidia.com/) |
-| [Ollama Cloud](https://ollama.com) | 推理平台 | US | 否 | 否 | ✅ active | [docs](https://docs.ollama.com/cloud) |
-| [OpenRouter（免费模型）](https://openrouter.ai) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://openrouter.ai/docs) |
-| [OVHcloud AI Endpoints](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/) | 推理平台 | EU | 是 | 否 | ✅ active | [docs](https://help.ovhcloud.com/csm/en-public-cloud-ai-endpoints) |
-| [SambaNova Cloud](https://cloud.sambanova.ai/) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://docs.sambanova.ai/) |
-| [硅基流动 SiliconFlow](https://siliconflow.cn) | 推理平台 | CN | 是 | 否 | ✅ active | [docs](https://docs.siliconflow.cn/) |
-| [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) | 推理平台 | US | 是 | 否 | ✅ active | [docs](https://vercel.com/docs/ai-gateway) |
+| [Page Agent 免费测试接口（通义千问）](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api) | `项目 Demo` | CN | 否 | 是 | ✅ active | [docs](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api) |
+| [OVHcloud AI Endpoints（匿名免费）](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/) | `匿名公开` | EU | 否 | 是 | ✅ active | [docs](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/) |
+| [Cerebras 免费推理](https://inference-docs.cerebras.ai/) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://inference-docs.cerebras.ai/) |
+| [GitHub Models](https://docs.github.com/en/github-models) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://docs.github.com/en/github-models) |
+| [Google AI Studio（Gemini 免费）](https://ai.google.dev/gemini-api/docs) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://ai.google.dev/gemini-api/docs) |
+| [Groq 免费档](https://console.groq.com/docs) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://console.groq.com/docs) |
+| [LLM7.io](https://llm7.io) | `免费 Token` | GB | 是 | 是 | ✅ active | [docs](https://llm7.io) |
+| [NVIDIA NIM（开发者免费）](https://docs.api.nvidia.com/) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://docs.api.nvidia.com/) |
+| [OpenRouter 免费模型（:free）](https://openrouter.ai/docs) | `免费 Token` | US | 是 | 是 | ✅ active | [docs](https://openrouter.ai/docs) |
+| [硅基流动免费模型](https://docs.siliconflow.cn/) | `免费 Token` | CN | 是 | 是 | ✅ active | [docs](https://docs.siliconflow.cn/) |
+| [智谱 Z.AI 免费 Flash 模型](https://docs.bigmodel.cn/) | `免费 Token` | CN | 是 | 是 | ✅ active | [docs](https://docs.bigmodel.cn/) |
 
-## 模型厂商官方 API
+## 调用示例（OpenAI 兼容）
 
-### Aion Labs
+以 **OVH 匿名端点**为例（无需 Key）：
 
-- **类型**: 模型厂商 · **地区**: IL · **状态**: ✅ active
-- **官网**: https://www.aionlabs.ai
-- **文档**: https://www.aionlabs.ai
-- **获取 Key**: https://www.aionlabs.ai
-- **Base URL**: `https://api.aionlabs.ai/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: 15 RPM, ~20K tokens/day
-- **商业使用**: `unknown` · **数据用途**: 未知
-- **示例模型**: `aion-2.5`, `aion-2.0`, `aion-rp-1.0`
-- **说明**: 永久免费档，偏角色扮演/叙事场景；无需绑卡。
-- **上次核对**: `2026-07-15`
+```bash
+export LLM_BASE_URL="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+export LLM_MODEL_NAME="Meta-Llama-3_3-70B-Instruct"
 
-### Cohere
+curl "$LLM_BASE_URL/chat/completions" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"$LLM_MODEL_NAME\",
+    \"messages\": [{\"role\": \"user\", \"content\": \"hello\"}],
+    \"max_tokens\": 64
+  }"
+```
 
-- **类型**: 模型厂商 · **地区**: CA · **状态**: ✅ active
-- **官网**: https://cohere.com
-- **文档**: https://docs.cohere.com/
-- **获取 Key**: https://dashboard.cohere.com/api-keys
-- **Base URL**: `https://api.cohere.com/v2`
-- **OpenAI 兼容**: 否 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: 20 RPM, ~1,000 requests/month (shared)
-- **商业使用**: `no` · **数据用途**: 未知
-- **示例模型**: `command-a-03-2025`, `command-r-plus-08-2024`, `command-r7b-12-2024`, `command-a-vision-07-2025`
-- **说明**: Trial/免费 API Key，通常无需绑卡；约 1000 次/月、20 RPM；非商业用途限制请读服务条款。
-- **上次核对**: `2026-07-15`
+## 开源项目官方测试接口（Demo / 技术评估）
 
-### Google AI Studio（Gemini）
+### Page Agent 免费测试接口（通义千问）
 
-- **类型**: 模型厂商 · **地区**: US · **状态**: ✅ active
-- **官网**: https://aistudio.google.com
-- **文档**: https://ai.google.dev/gemini-api/docs
-- **获取 Key**: https://aistudio.google.com/app/apikey
-- **Base URL**: `https://generativelanguage.googleapis.com/v1beta`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Per-model; e.g. Flash-class often ~5–30 RPM / tens–thousands RPD; Gemma often higher RPD
-- **商业使用**: `restricted` · **数据用途**: 可能用于训练/改进
-- **示例模型**: `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-3.1-flash-lite`, `gemma-3-27b-it`
-- **说明**: 免费档在部分地区（如 EU/UK/CH）可能不可用；免费层提示词可能被用于产品改进（部分地区除外）。配额会调整，以官网为准。
-- **上次核对**: `2026-07-15`
+- **类别**: `project_demo` · **提供方**: Alibaba page-agent maintainers (via Alibaba Cloud FC + BaiLian) · **地区**: CN
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run`
+- **需 API Key**: 否
+- **示例模型**: `qwen3.5-plus`, `qwen3.5-flash`
+- **文档**: https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api
+- **仓库**: https://github.com/alibaba/page-agent
+- **条款**: https://github.com/alibaba/page-agent/blob/main/docs/terms-and-privacy.md#2-testing-api-and-demo-disclaimer--terms-of-use
 
-### Mistral AI（La Plateforme）
+**可复制配置**
 
-- **类型**: 模型厂商 · **地区**: FR · **状态**: ✅ active
-- **官网**: https://console.mistral.ai/
-- **文档**: https://docs.mistral.ai/
-- **获取 Key**: https://console.mistral.ai/api-keys
-- **Base URL**: `https://api.mistral.ai/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 是
-- **速率/额度（摘要）**: ~1 RPS, ~500K TPM, ~1B tokens/month per model (Experiment)
-- **商业使用**: `restricted` · **数据用途**: 可能用于训练/改进
-- **示例模型**: `mistral-small-latest`, `mistral-medium-latest`, `codestral-latest`, `mistral-nemo`
-- **说明**: Experiment 计划免费档；通常需手机验证；可能需同意数据用于改进模型。~1B tokens/月量级（以官方为准）。
-- **上次核对**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"
+LLM_MODEL_NAME="qwen3.5-plus"
+```
 
-### 智谱 Z.AI（BigModel）
+**限制与说明**
 
-- **类型**: 模型厂商 · **地区**: CN · **状态**: ✅ active
-- **官网**: https://open.bigmodel.cn/
-- **文档**: https://docs.bigmodel.cn/
-- **获取 Key**: https://open.bigmodel.cn/usercenter/apikeys
-- **Base URL**: `https://open.bigmodel.cn/api/paas/v4`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Often ~1 concurrent on free Flash models (verify)
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `glm-4.7-flash`, `glm-4.6v-flash`
-- **说明**: 提供永久免费模型（如 GLM Flash 系列），并发/配额以控制台为准；国际站可能有不同入口。
-- **上次核对**: `2026-07-15`
+> 仅供 PageAgent.js / Extension 技术评估与 R&D。
+> 禁止生产环境；禁止输入 PII/敏感数据；数据经中国大陆服务器处理。
+> 代理会校验请求：首条需为 system/developer，且 system prompt 需匹配官方 page-agent 提示词（通用聊天可能被拒绝）。
+> 可能随时限流或下线。
 
-## 主流推理平台
+## 匿名公开端点（无需 Key）
 
-### Cerebras Inference
+### OVHcloud AI Endpoints（匿名免费）
 
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://cloud.cerebras.ai/
-- **文档**: https://inference-docs.cerebras.ai/
-- **获取 Key**: https://cloud.cerebras.ai/
+- **类别**: `anonymous_public` · **提供方**: OVHcloud · **地区**: EU
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1`
+- **需 API Key**: 否
+- **示例模型**: `Meta-Llama-3_3-70B-Instruct`, `Llama-3.1-8B-Instruct`, `gpt-oss-120b`, `gpt-oss-20b`, `Qwen3-32B`, `Qwen3-Coder-30B-A3B-Instruct`, `Mistral-Small-3.2-24B-Instruct`, `Mistral-Nemo-Instruct-2407`, `Mistral-7B-Instruct-v0.3`
+- **文档**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/
+- **条款**: https://www.ovhcloud.com/en/terms-and-conditions/
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+LLM_MODEL_NAME="Meta-Llama-3_3-70B-Instruct"
+```
+
+**限制与说明**
+
+> 匿名档：无需注册、无需 API Key；约 2 RPM / IP / 模型（以官网为准）。
+> 适合联调 OpenAI SDK / Agent 工具；更高配额需 OVH 账号与计费项目。
+> 模型托管在欧盟。模型列表可能变更，请用 GET /v1/models 确认。
+
+## 免费 Token / 免费档（拿 Key 即可测）
+
+### Cerebras 免费推理
+
+- **类别**: `free_token` · **提供方**: Cerebras · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
 - **Base URL**: `https://api.cerebras.ai/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: e.g. gpt-oss-120b: ~30 RPM, ~14.4K RPD, ~1M TPD (verify)
-- **商业使用**: `yes` · **数据用途**: 通常不用于训练
-- **示例模型**: `gpt-oss-120b`, `llama3.1-8b`
-- **说明**: 晶圆级芯片推理，速度极高；免费档模型列表与上下文上限可能变动（曾出现免费上下文封顶）。
-- **上次核对**: `2026-07-15`
+- **需 API Key**: 是 · [获取 Key](https://cloud.cerebras.ai/)
+- **示例模型**: `llama3.1-8b`, `gpt-oss-120b`
+- **文档**: https://inference-docs.cerebras.ai/
+- **条款**: https://www.cerebras.ai/terms-of-service
 
-### Cloudflare Workers AI
+**可复制配置**
 
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://developers.cloudflare.com/workers-ai/
-- **文档**: https://developers.cloudflare.com/workers-ai/
-- **获取 Key**: https://dash.cloudflare.com/profile/api-tokens
-- **Base URL**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run`
-- **OpenAI 兼容**: 否 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: ~10,000 neurons/day shared across models
-- **商业使用**: `yes` · **数据用途**: 未知
-- **示例模型**: `@cf/meta/llama-3.3-70b-instruct-fp8-fast`, `@cf/meta/llama-4-scout-17b-16e-instruct`, `@cf/openai/gpt-oss-120b`, `@cf/qwen/qwen3-30b-a3b-fp8`
-- **说明**: 每日 Neurons 免费额度（如 10,000 neurons/day）；模型目录丰富。
-- **上次核对**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://api.cerebras.ai/v1"
+LLM_MODEL_NAME="llama3.1-8b"
+LLM_API_KEY="<https://cloud.cerebras.ai/>"
+```
+
+**限制与说明**
+
+> 免费档 Key；超高吞吐，适合压测客户端与流式输出。
+> 免费模型列表与上下文上限可能突然变更。
 
 ### GitHub Models
 
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://github.com/marketplace/models
-- **文档**: https://docs.github.com/en/github-models
-- **获取 Key**: https://github.com/settings/tokens
+- **类别**: `free_token` · **提供方**: GitHub · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
 - **Base URL**: `https://models.github.ai/inference`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Tier-based RPM/RPD (e.g. free often ~10–15 RPM / ~50–150 RPD class)
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `openai/gpt-4.1-mini`, `meta/Llama-3.3-70B-Instruct`, `deepseek/DeepSeek-R1`, `mistral-ai/Mistral-Small-3.1`
-- **说明**: 面向原型开发；限额与 Copilot 订阅档位相关；单次输入/输出 token 上限较紧。
-- **上次核对**: `2026-07-15`
+- **需 API Key**: 是 · [获取 Key](https://github.com/settings/tokens)
+- **示例模型**: `openai/gpt-4.1-mini`, `openai/gpt-4o-mini`, `meta/Llama-3.3-70B-Instruct`, `deepseek/DeepSeek-R1`
+- **文档**: https://docs.github.com/en/github-models
+- **条款**: https://docs.github.com/en/site-policy
 
-### Groq
+**可复制配置**
 
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://console.groq.com
-- **文档**: https://console.groq.com/docs
-- **获取 Key**: https://console.groq.com/keys
+```bash
+LLM_BASE_URL="https://models.github.ai/inference"
+LLM_MODEL_NAME="openai/gpt-4.1-mini"
+LLM_API_KEY="<GitHub PAT with models access>"
+```
+
+**限制与说明**
+
+> 使用 GitHub Token（需 models 相关权限）即可原型测试。
+> 限额与 Copilot 档位相关，单次输入输出上限较紧，适合功能验证。
+
+### Google AI Studio（Gemini 免费）
+
+- **类别**: `free_token` · **提供方**: Google · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://generativelanguage.googleapis.com/v1beta/openai`
+- **需 API Key**: 是 · [获取 Key](https://aistudio.google.com/app/apikey)
+- **示例模型**: `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-2.0-flash`
+- **文档**: https://ai.google.dev/gemini-api/docs
+- **条款**: https://ai.google.dev/gemini-api/terms
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai"
+LLM_MODEL_NAME="gemini-2.5-flash"
+LLM_API_KEY="<https://aistudio.google.com/app/apikey>"
+```
+
+**限制与说明**
+
+> AI Studio 可免费创建 API Key；部分地区无免费档。
+> 免费层数据使用/地区限制请读官方条款；配额按模型变化。
+
+### Groq 免费档
+
+- **类别**: `free_token` · **提供方**: Groq · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
 - **Base URL**: `https://api.groq.com/openai/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Model-dependent; e.g. ~30 RPM, ~1K–14K RPD, TPM in thousands–tens of thousands
-- **商业使用**: `yes` · **数据用途**: 通常不用于训练
-- **示例模型**: `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `openai/gpt-oss-120b`, `qwen/qwen3-32b`
-- **说明**: LPU 超快推理；免费档有 RPM/TPM/RPD 限制，大模型 RPD 通常更紧。
-- **上次核对**: `2026-07-15`
+- **需 API Key**: 是 · [获取 Key](https://console.groq.com/keys)
+- **示例模型**: `llama-3.1-8b-instant`, `llama-3.3-70b-versatile`, `openai/gpt-oss-20b`, `qwen/qwen3-32b`
+- **文档**: https://console.groq.com/docs
+- **条款**: https://groq.com/terms-of-use/
 
-### Hugging Face Inference Providers
+**可复制配置**
 
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://huggingface.co
-- **文档**: https://huggingface.co/docs/inference-providers
-- **获取 Key**: https://huggingface.co/settings/tokens
-- **Base URL**: `https://router.huggingface.co/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Credit-metered monthly free allocation
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `meta-llama/Meta-Llama-3.1-8B-Instruct`, `mistralai/Mistral-7B-Instruct-v0.3`, `Qwen/Qwen2.5-7B-Instruct`
-- **说明**: 免费用户每月有小额 Inference Provider 额度（如约 $0.10 量级）；路由到多家后端。
-- **上次核对**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://api.groq.com/openai/v1"
+LLM_MODEL_NAME="llama-3.1-8b-instant"
+LLM_API_KEY="<https://console.groq.com/keys>"
+```
+
+**限制与说明**
+
+> 控制台免费创建 Key，无需绑卡即可测；有 RPM/TPM/RPD 限制。
+> 适合速度敏感的联调；模型与配额以官方 rate limits 页为准。
 
 ### LLM7.io
 
-- **类型**: 推理平台 · **地区**: GB · **状态**: ⚠️ limited
-- **官网**: https://llm7.io
-- **文档**: https://llm7.io
-- **获取 Key**: https://token.llm7.io
+- **类别**: `free_token` · **提供方**: LLM7.io · **地区**: GB
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
 - **Base URL**: `https://api.llm7.io/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: ~30 RPM default; ~120 RPM with token
-- **商业使用**: `unknown` · **数据用途**: 未知
-- **示例模型**: `gemini-2.5-flash-lite`, `mistral-small-3.1-24b`, `qwen2.5-coder-32b`
-- **说明**: 低门槛网关；基础访问可无注册；有 token 时限额更高。第三方聚合，稳定性/合规请自行评估。
-- **上次核对**: `2026-07-15`
+- **需 API Key**: 是 · [获取 Key](https://token.llm7.io)
+- **示例模型**: `deepseek-v4-flash`, `gemma3:27b`, `gpt-5.4-mini`, `kimi-k2.6`, `minimax-m2.7`
+- **文档**: https://llm7.io
+- **条款**: https://llm7.io
 
-### 魔搭 ModelScope API-Inference
-
-- **类型**: 推理平台 · **地区**: CN · **状态**: ✅ active
-- **官网**: https://modelscope.cn
-- **文档**: https://modelscope.cn/docs/model-service/API-Inference/intro
-- **获取 Key**: https://modelscope.cn/my/myaccesstoken
-- **Base URL**: `https://api-inference.modelscope.cn/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 是
-- **速率/额度（摘要）**: e.g. ~2,000 RPD total, per-model cap ~500 RPD (dynamic)
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `Qwen/Qwen3.5-35B-A3B`, `Qwen/Qwen3.5-27B`
-- **说明**: 注册用户 API-Inference 免费；通常需绑定阿里云账号与实名；日配额动态调整。
-- **上次核对**: `2026-07-15`
-
-### NVIDIA NIM
-
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://build.nvidia.com/explore/discover
-- **文档**: https://docs.api.nvidia.com/
-- **获取 Key**: https://build.nvidia.com/
-- **Base URL**: `https://integrate.api.nvidia.com/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 是
-- **速率/额度（摘要）**: ~40 RPM (typical free); no simple public daily token cap
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `meta/llama-3.1-405b-instruct`, `deepseek-ai/deepseek-r1`, `nvidia/nemotron-3-super-120b-a12b`, `qwen/qwen2.5-72b-instruct`
-- **说明**: NVIDIA Developer 计划免费调用；通常需手机验证；上下文窗口可能受限。
-- **上次核对**: `2026-07-15`
-
-### Ollama Cloud
-
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://ollama.com
-- **文档**: https://docs.ollama.com/cloud
-- **获取 Key**: https://ollama.com/settings/keys
-- **Base URL**: `https://api.ollama.com`
-- **OpenAI 兼容**: 否 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Session/weekly qualitative limits (unpublished exact numbers)
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `gpt-oss:120b-cloud`, `deepseek-r1:cloud`, `qwen3-coder:480b-cloud`
-- **说明**: 有免费轻量使用档；限额偏会话/周级且文档不一定公开具体数字；API 为 Ollama 协议，非标准 OpenAI SDK。
-- **上次核对**: `2026-07-15`
-
-### OpenRouter（免费模型）
-
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://openrouter.ai
-- **文档**: https://openrouter.ai/docs
-- **获取 Key**: https://openrouter.ai/keys
-- **Base URL**: `https://openrouter.ai/api/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: e.g. ~20 RPM, ~50–200 RPD default; up to ~1000 RPD after $10 lifetime top-up
-- **商业使用**: `restricted` · **数据用途**: 可能用于训练/改进
-- **示例模型**: `qwen/qwen3-coder:free`, `meta-llama/llama-3.3-70b-instruct:free`, `openai/gpt-oss-20b:free`, `google/gemma-4-31b-it:free`
-- **说明**: 仅统计 `:free` 模型；无余额也可调用免费模型。免费路由可能记录提示词。充值一定金额可提高免费模型日限额。
-- **上次核对**: `2026-07-15`
-
-### OVHcloud AI Endpoints
-
-- **类型**: 推理平台 · **地区**: EU · **状态**: ✅ active
-- **官网**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/
-- **文档**: https://help.ovhcloud.com/csm/en-public-cloud-ai-endpoints
-- **获取 Key**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/
-- **Base URL**: `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Anonymous ~2 RPM/IP/model; authenticated higher (paid)
-- **商业使用**: `yes` · **数据用途**: 未知
-- **示例模型**: `Meta-Llama-3_3-70B-Instruct`, `gpt-oss-120b`, `Mistral-Small-3.2-24B-Instruct`, `Qwen3-Coder-30B-A3B-Instruct`
-- **说明**: 匿名免费档：无需注册/Key，按 IP 限流（约 2 RPM/模型）；更高额度需账号计费。数据在欧盟机房。
-- **上次核对**: `2026-07-15`
-
-### SambaNova Cloud
-
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://cloud.sambanova.ai/
-- **文档**: https://docs.sambanova.ai/
-- **获取 Key**: https://cloud.sambanova.ai/apis
-- **Base URL**: `https://api.sambanova.ai/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: ~20 RPM, ~20 RPD, ~200K TPD per model (verify)
-- **商业使用**: `yes` · **数据用途**: 未知
-- **示例模型**: `Meta-Llama-3.3-70B-Instruct`, `DeepSeek-V3.1`, `gpt-oss-120b`
-- **说明**: 有持续免费档（RPM/RPD/TPD）；新用户可能另有试用额度（试用不算收录标准，但免费档本身持续）。
-- **上次核对**: `2026-07-15`
-
-### 硅基流动 SiliconFlow
-
-- **类型**: 推理平台 · **地区**: CN · **状态**: ✅ active
-- **官网**: https://siliconflow.cn
-- **文档**: https://docs.siliconflow.cn/
-- **获取 Key**: https://cloud.siliconflow.cn/account/ak
-- **Base URL**: `https://api.siliconflow.cn/v1`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: e.g. free models ~30 RPM / ~60K TPM class (verify)
-- **商业使用**: `restricted` · **数据用途**: 未知
-- **示例模型**: `Qwen/Qwen3-8B`, `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B`
-- **说明**: 部分模型永久免费；大量模型为付费。OpenAI 兼容接口。
-- **上次核对**: `2026-07-15`
-
-### Vercel AI Gateway
-
-- **类型**: 推理平台 · **地区**: US · **状态**: ✅ active
-- **官网**: https://vercel.com/docs/ai-gateway
-- **文档**: https://vercel.com/docs/ai-gateway
-- **获取 Key**: https://vercel.com/account/tokens
-- **Base URL**: `—`
-- **OpenAI 兼容**: 是 · **需绑卡**: 否 · **手机验证**: 否
-- **速率/额度（摘要）**: Monthly free credit allowance
-- **商业使用**: `yes` · **数据用途**: 未知
-- **示例模型**: `various-via-gateway`
-- **说明**: 网关路由到多家提供商；每月有免费额度（如约 $5/月量级，以官网定价页为准）。
-- **上次核对**: `2026-07-15`
-
-## 快速开始示例
-
-多数 OpenAI 兼容接口可如下调用（以 Groq 为例）：
+**可复制配置**
 
 ```bash
-export OPENAI_API_KEY=gsk_xxx
-export OPENAI_BASE_URL=https://api.groq.com/openai/v1
-
-curl "$OPENAI_BASE_URL/chat/completions" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"llama-3.1-8b-instant","messages":[{"role":"user","content":"hello"}]}'
+LLM_BASE_URL="https://api.llm7.io/v1"
+LLM_MODEL_NAME="deepseek-v4-flash"
+LLM_API_KEY="<get free token at https://token.llm7.io>"
 ```
+
+**限制与说明**
+
+> 可免费领取 token；基础访问与限额以官网为准（有 token 通常更高 RPM）。
+> 第三方聚合网关，稳定性/合规/数据路径请自行评估；模型可用性会变。
+> 适合快速打通 OpenAI 兼容客户端做联调测试。
+
+### NVIDIA NIM（开发者免费）
+
+- **类别**: `free_token` · **提供方**: NVIDIA · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://integrate.api.nvidia.com/v1`
+- **需 API Key**: 是 · [获取 Key](https://build.nvidia.com/)
+- **示例模型**: `meta/llama-3.1-8b-instruct`, `microsoft/phi-3-mini-4k-instruct`, `google/gemma-2-9b-it`
+- **文档**: https://docs.api.nvidia.com/
+- **条款**: https://www.nvidia.com/en-us/about-nvidia/privacy-policy/
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://integrate.api.nvidia.com/v1"
+LLM_MODEL_NAME="meta/llama-3.1-8b-instruct"
+LLM_API_KEY="<https://build.nvidia.com/>"
+```
+
+**限制与说明**
+
+> NVIDIA Developer 计划可免费调用部分模型；通常需注册/验证。
+> 有速率限制，上下文可能较短，适合模型摸底测试。
+
+### OpenRouter 免费模型（:free）
+
+- **类别**: `free_token` · **提供方**: OpenRouter · **地区**: US
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://openrouter.ai/api/v1`
+- **需 API Key**: 是 · [获取 Key](https://openrouter.ai/keys)
+- **示例模型**: `openrouter/free`, `meta-llama/llama-3.3-70b-instruct:free`, `qwen/qwen3-coder:free`, `openai/gpt-oss-20b:free`, `google/gemma-4-31b-it:free`
+- **文档**: https://openrouter.ai/docs
+- **条款**: https://openrouter.ai/terms
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://openrouter.ai/api/v1"
+LLM_MODEL_NAME="openrouter/free"
+LLM_API_KEY="<https://openrouter.ai/keys>"
+```
+
+**限制与说明**
+
+> 注册即可拿 Key；调用模型名带 `:free` 后缀的免费模型（或 free router）。
+> 默认日请求限额较低；免费路由可能记录提示词。仅建议开发测试。
+
+### 硅基流动免费模型
+
+- **类别**: `free_token` · **提供方**: SiliconFlow · **地区**: CN
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://api.siliconflow.cn/v1`
+- **需 API Key**: 是 · [获取 Key](https://cloud.siliconflow.cn/account/ak)
+- **示例模型**: `Qwen/Qwen3-8B`, `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B`
+- **文档**: https://docs.siliconflow.cn/
+- **条款**: https://docs.siliconflow.cn/
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://api.siliconflow.cn/v1"
+LLM_MODEL_NAME="Qwen/Qwen3-8B"
+LLM_API_KEY="<https://cloud.siliconflow.cn/account/ak>"
+```
+
+**限制与说明**
+
+> 注册后创建 Key；部分模型永久免费，其余计费。
+> 以控制台标注的免费模型为准，适合国内网络环境联调。
+
+### 智谱 Z.AI 免费 Flash 模型
+
+- **类别**: `free_token` · **提供方**: Zhipu / Z.AI · **地区**: CN
+- **状态**: ✅ active · **上次核对**: `2026-07-15`
+- **Base URL**: `https://open.bigmodel.cn/api/paas/v4`
+- **需 API Key**: 是 · [获取 Key](https://open.bigmodel.cn/usercenter/apikeys)
+- **示例模型**: `glm-4.7-flash`, `glm-4.6v-flash`
+- **文档**: https://docs.bigmodel.cn/
+- **条款**: https://open.bigmodel.cn/
+
+**可复制配置**
+
+```bash
+LLM_BASE_URL="https://open.bigmodel.cn/api/paas/v4"
+LLM_MODEL_NAME="glm-4.7-flash"
+LLM_API_KEY="<https://open.bigmodel.cn/usercenter/apikeys>"
+```
+
+**限制与说明**
+
+> 官方提供永久免费 Flash 类模型；并发/配额以控制台为准。
+> 适合中文场景功能验证。
 
 ## 如何贡献
 
 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
-1. 编辑 `data/providers.yaml`
-2. 运行 `python scripts/validate.py`
-3. 运行 `python scripts/generate_readme.py`
-4. 提交 PR（勿手改生成的 README）
+1. 在 `data/endpoints.yaml` 增加条目（必须有 `env.LLM_BASE_URL` + `env.LLM_MODEL_NAME`）
+2. `python scripts/validate.py && python scripts/generate_readme.py`
+3. 提交 PR，附上官网/文档链接与是否仅限技术评估的说明
 
-## 与同类项目的差异
+## 参考形态
 
-| 项目 | 差异 |
-| --- | --- |
-| [cheahjs/free-llm-api-resources](https://github.com/cheahjs/free-llm-api-resources) | 更全，含试用额度；本仓库**只收永久免费**并提供 YAML SSOT + 中英双语 |
-| [mnfst/awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) | Awesome 列表风格；本仓库强调 schema 校验与可生成 README |
-
-致谢上述社区整理工作。
-
-## 维护
+Page Agent 官方文档中的免费测试接口写法：
 
 ```bash
-pip install -r requirements.txt
-python scripts/validate.py
-python scripts/generate_readme.py
+# qwen3.5-plus / qwen3.5-flash
+LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"
+LLM_MODEL_NAME="qwen3.5-plus"
 ```
+
+来源：<https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api>
 
 ## License
 

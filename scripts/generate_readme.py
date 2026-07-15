@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate README.md (zh) and README.en.md from data/providers.yaml."""
+"""Generate README.md (zh) and README.en.md from data/endpoints.yaml."""
 
 from __future__ import annotations
 
@@ -9,17 +9,38 @@ from pathlib import Path
 try:
     import yaml
 except ImportError:
-    print("Missing dependency: PyYAML. Install with: pip install pyyaml", file=sys.stderr)
+    print("Missing dependency: PyYAML. pip install -r requirements.txt", file=sys.stderr)
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "providers.yaml"
+DATA = ROOT / "data" / "endpoints.yaml"
+
+CAT_ORDER = ["project_demo", "anonymous_public", "free_token"]
+CAT_ZH = {
+    "project_demo": "开源项目官方测试接口（Demo / 技术评估）",
+    "anonymous_public": "匿名公开端点（无需 Key）",
+    "free_token": "免费 Token / 免费档（拿 Key 即可测）",
+}
+CAT_EN = {
+    "project_demo": "Project official testing APIs (demo / evaluation)",
+    "anonymous_public": "Anonymous public endpoints (no key)",
+    "free_token": "Free token / free tier (key required)",
+}
 
 
-def load_providers():
+def load():
     with DATA.open(encoding="utf-8") as f:
         doc = yaml.safe_load(f)
-    return doc.get("meta", {}), doc["providers"]
+    return doc.get("meta", {}), doc["endpoints"]
+
+
+def status_badge(s: str) -> str:
+    return {
+        "active": "✅ active",
+        "limited": "⚠️ limited",
+        "unknown": "❓ unknown",
+        "down": "❌ down",
+    }.get(s, s)
 
 
 def yes_no(v: bool, lang: str) -> str:
@@ -28,188 +49,176 @@ def yes_no(v: bool, lang: str) -> str:
     return "Yes" if v else "No"
 
 
-def type_label(t: str, lang: str) -> str:
+def env_block(env: dict) -> str:
+    lines = []
+    for k in ("LLM_BASE_URL", "LLM_MODEL_NAME", "LLM_API_KEY"):
+        if k in env:
+            lines.append(f'{k}="{env[k]}"')
+        elif k == "LLM_API_KEY":
+            # show comment-style when not required
+            pass
+    # include any other keys
+    for k, v in env.items():
+        if k not in ("LLM_BASE_URL", "LLM_MODEL_NAME", "LLM_API_KEY"):
+            lines.append(f'{k}="{v}"')
+    return "```bash\n" + "\n".join(lines) + "\n```"
+
+
+def overview_table(endpoints: list, lang: str) -> str:
     if lang == "zh":
-        return "模型厂商" if t == "model_vendor" else "推理平台"
-    return "Model vendor" if t == "model_vendor" else "Inference platform"
-
-
-def status_badge(status: str) -> str:
-    return {"active": "✅ active", "limited": "⚠️ limited", "unknown": "❓ unknown"}.get(
-        status, status
-    )
-
-
-def md_link(text: str, url: str) -> str:
-    return f"[{text}]({url})"
-
-
-def overview_table(providers: list, lang: str) -> str:
-    if lang == "zh":
-        headers = "| 名称 | 类型 | 地区 | OpenAI 兼容 | 需绑卡 | 状态 | 文档 |"
-        sep = "| --- | --- | --- | --- | --- | --- | --- |"
+        rows = [
+            "| 名称 | 类别 | 地区 | 需 Key | OpenAI 兼容 | 状态 | 文档 |",
+            "| --- | --- | --- | --- | --- | --- | --- |",
+        ]
     else:
-        headers = "| Name | Type | Region | OpenAI-compatible | Card required | Status | Docs |"
-        sep = "| --- | --- | --- | --- | --- | --- | --- |"
-
-    rows = [headers, sep]
-    for p in providers:
-        name = p["name_zh"] if lang == "zh" else p["name"]
+        rows = [
+            "| Name | Category | Region | Needs key | OpenAI-compatible | Status | Docs |",
+            "| --- | --- | --- | --- | --- | --- | --- |",
+        ]
+    cat_label = CAT_ZH if lang == "zh" else CAT_EN
+    for ep in endpoints:
+        name = ep["name_zh"] if lang == "zh" else ep["name"]
+        cat = cat_label.get(ep["category"], ep["category"])
+        # shorten category for table
+        short = {
+            "project_demo": "project_demo" if lang == "en" else "项目 Demo",
+            "anonymous_public": "anonymous" if lang == "en" else "匿名公开",
+            "free_token": "free_token" if lang == "en" else "免费 Token",
+        }.get(ep["category"], ep["category"])
         rows.append(
-            "| "
-            + " | ".join(
-                [
-                    md_link(name, p["website"]),
-                    type_label(p["type"], lang),
-                    p["region"],
-                    yes_no(p["openai_compatible"], lang),
-                    yes_no(p["credit_card_required"], lang),
-                    status_badge(p["status"]),
-                    md_link("docs", p["docs"]),
-                ]
-            )
-            + " |"
+            f"| [{name}]({ep['source_docs']}) | `{short}` | {ep['region']} | "
+            f"{yes_no(ep['api_key_required'], lang)} | {yes_no(ep['openai_compatible'], lang)} | "
+            f"{status_badge(ep['status'])} | [docs]({ep['source_docs']}) |"
         )
     return "\n".join(rows)
 
 
-def detail_section(p: dict, lang: str) -> str:
-    title = p["name_zh"] if lang == "zh" else p["name"]
-    ft = p["free_tier"]
-    notes = ft["notes_zh"] if lang == "zh" else ft["notes_en"]
-    models = ", ".join(f"`{m}`" for m in p["models_sample"])
-    base = p.get("base_url") or ("—" if lang == "en" else "—")
-    phone = p.get("phone_required", False)
-    commercial = ft.get("commercial_use", "unknown")
-    training = ft.get("data_used_for_training")
+def detail(ep: dict, lang: str) -> str:
+    title = ep["name_zh"] if lang == "zh" else ep["name"]
+    models = ", ".join(f"`{m}`" for m in ep["models"])
+    restrict = ep["restrictions_zh"] if lang == "zh" else ep["restrictions_en"]
+    restrict = "\n".join(f"> {line}" if line.strip() else ">" for line in restrict.strip().splitlines())
+    terms = ep.get("terms") or ep["source_docs"]
+    repo = ep.get("source_repo")
 
     if lang == "zh":
-        train_s = {True: "可能用于训练/改进", False: "通常不用于训练", None: "未知"}.get(
-            training, "未知"
-        )
         lines = [
             f"### {title}",
             "",
-            f"- **类型**: {type_label(p['type'], lang)} · **地区**: {p['region']} · **状态**: {status_badge(p['status'])}",
-            f"- **官网**: {p['website']}",
-            f"- **文档**: {p['docs']}",
-            f"- **获取 Key**: {p['api_key_url']}",
-            f"- **Base URL**: `{base}`",
-            f"- **OpenAI 兼容**: {yes_no(p['openai_compatible'], lang)} · **需绑卡**: {yes_no(p['credit_card_required'], lang)} · **手机验证**: {yes_no(phone, lang)}",
-            f"- **速率/额度（摘要）**: {ft['rate_limits_summary']}",
-            f"- **商业使用**: `{commercial}` · **数据用途**: {train_s}",
+            f"- **类别**: `{ep['category']}` · **提供方**: {ep['provider']} · **地区**: {ep['region']}",
+            f"- **状态**: {status_badge(ep['status'])} · **上次核对**: `{ep['last_verified']}`",
+            f"- **Base URL**: `{ep['base_url']}`",
+            f"- **需 API Key**: {yes_no(ep['api_key_required'], lang)}"
+            + (f" · [获取 Key]({ep['api_key_url']})" if ep.get("api_key_url") else ""),
             f"- **示例模型**: {models}",
-            f"- **说明**: {notes}",
-            f"- **上次核对**: `{p['last_verified']}`",
-            "",
+            f"- **文档**: {ep['source_docs']}",
         ]
+        if repo:
+            lines.append(f"- **仓库**: {repo}")
+        lines.append(f"- **条款**: {terms}")
+        lines.extend(["", "**可复制配置**", "", env_block(ep["env"]), "", "**限制与说明**", "", restrict, ""])
     else:
-        train_s = {True: "may be used for training/improvement", False: "typically not for training", None: "unknown"}.get(
-            training, "unknown"
-        )
         lines = [
             f"### {title}",
             "",
-            f"- **Type**: {type_label(p['type'], lang)} · **Region**: {p['region']} · **Status**: {status_badge(p['status'])}",
-            f"- **Website**: {p['website']}",
-            f"- **Docs**: {p['docs']}",
-            f"- **API key**: {p['api_key_url']}",
-            f"- **Base URL**: `{base}`",
-            f"- **OpenAI-compatible**: {yes_no(p['openai_compatible'], lang)} · **Card required**: {yes_no(p['credit_card_required'], lang)} · **Phone**: {yes_no(phone, lang)}",
-            f"- **Rate / quota (summary)**: {ft['rate_limits_summary']}",
-            f"- **Commercial use**: `{commercial}` · **Data use**: {train_s}",
+            f"- **Category**: `{ep['category']}` · **Provider**: {ep['provider']} · **Region**: {ep['region']}",
+            f"- **Status**: {status_badge(ep['status'])} · **Last verified**: `{ep['last_verified']}`",
+            f"- **Base URL**: `{ep['base_url']}`",
+            f"- **API key required**: {yes_no(ep['api_key_required'], lang)}"
+            + (f" · [Get key]({ep['api_key_url']})" if ep.get("api_key_url") else ""),
             f"- **Sample models**: {models}",
-            f"- **Notes**: {notes}",
-            f"- **Last verified**: `{p['last_verified']}`",
-            "",
+            f"- **Docs**: {ep['source_docs']}",
         ]
+        if repo:
+            lines.append(f"- **Repo**: {repo}")
+        lines.append(f"- **Terms**: {terms}")
+        lines.extend(["", "**Copy-paste config**", "", env_block(ep["env"]), "", "**Restrictions**", "", restrict, ""])
     return "\n".join(lines)
 
 
-def generate_zh(meta: dict, providers: list) -> str:
-    vendors = [p for p in providers if p["type"] == "model_vendor"]
-    platforms = [p for p in providers if p["type"] == "inference_platform"]
+def curl_example(lang: str) -> str:
+    if lang == "zh":
+        title = "## 调用示例（OpenAI 兼容）"
+        note = "以 **OVH 匿名端点**为例（无需 Key）："
+    else:
+        title = "## Call example (OpenAI-compatible)"
+        note = "Example using the **OVH anonymous** endpoint (no key):"
+    code = """```bash
+export LLM_BASE_URL="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+export LLM_MODEL_NAME="Meta-Llama-3_3-70B-Instruct"
+
+curl "$LLM_BASE_URL/chat/completions" \\
+  -H "Content-Type: application/json" \\
+  -d "{
+    \\"model\\": \\"$LLM_MODEL_NAME\\",
+    \\"messages\\": [{\\"role\\": \\"user\\", \\"content\\": \\"hello\\"}],
+    \\"max_tokens\\": 64
+  }"
+```"""
+    return "\n".join([title, "", note, "", code, ""])
+
+
+def generate_zh(meta: dict, endpoints: list) -> str:
     updated = meta.get("updated", "")
-    criteria = meta.get("criteria_zh", "")
-
     parts = [
-        "# 免费 LLM API 目录",
+        "# 免费测试 LLM API",
         "",
-        "> 官方 + 主流推理平台 · **仅永久免费档** · 结构化数据驱动",
+        "> 收集 **可直接粘贴使用** 的免费测试接口：`LLM_BASE_URL` + `LLM_MODEL_NAME`",
+        ">",
+        "> 形态对齐 [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)",
         "",
-        f"[English](./README.en.md) · 数据源 [`data/providers.yaml`](./data/providers.yaml) · 上次数据更新：`{updated}`",
+        f"[English](./README.en.md) · 数据源 [`data/endpoints.yaml`](./data/endpoints.yaml) · 更新：`{updated}`",
         "",
-        "## 这是什么",
+        "## 这是什么 / 不是什么",
         "",
-        "收集并维护**可公开申请**的 LLM HTTP API，条件是：",
+        "| ✅ 我们收录 | ❌ 我们不收录 |",
+        "| --- | --- |",
+        "| 开源项目为 Demo 提供的 **官方测试接口** | 非官方反代 / 盗 Key / 爬聊天网页 |",
+        "| **无需注册** 的公开免费端点 | 仅有网页 Chat、没有 HTTP API |",
+        "| 零成本拿 Key 就能测的 **OpenAI 兼容** 端点 | 纯营销「送额度」却无稳定测试入口说明 |",
+        "| 每条都给出 **可复制 env** | 生产级 SLA 承诺（我们不承诺） |",
         "",
-        f"- {criteria}",
-        "- 有官方文档与申请入口",
-        "- **不包含**一次性试用额度、非官方反代、聊天网页扒接口",
+        f"**定位**：{meta.get('focus_zh', '')}",
         "",
-        "## 免责声明",
+        f"**免责声明**：{meta.get('disclaimer_zh', '')}",
         "",
-        "- 配额、模型列表、服务条款**随时可能变更**，请以各服务商官网为准。",
-        "- 本仓库只做信息整理，不提供代理、Key 共享或绕过限制的方法。",
-        "- 使用前请阅读各厂商 ToS（商业用途、数据训练、地区限制等）。",
-        "- 请合理使用免费档，避免滥用导致社区失去这些资源。",
+        f"## 总览（{len(endpoints)}）",
         "",
-        f"## 总览（{len(providers)}）",
+        overview_table(endpoints, "zh"),
         "",
-        overview_table(providers, "zh"),
-        "",
-        "## 模型厂商官方 API",
-        "",
+        curl_example("zh"),
     ]
-    for p in vendors:
-        parts.append(detail_section(p, "zh"))
 
-    parts.append("## 主流推理平台")
-    parts.append("")
-    for p in platforms:
-        parts.append(detail_section(p, "zh"))
+    for cat in CAT_ORDER:
+        group = [e for e in endpoints if e["category"] == cat]
+        if not group:
+            continue
+        parts.append(f"## {CAT_ZH[cat]}")
+        parts.append("")
+        for ep in group:
+            parts.append(detail(ep, "zh"))
 
     parts.extend(
         [
-            "## 快速开始示例",
-            "",
-            "多数 OpenAI 兼容接口可如下调用（以 Groq 为例）：",
-            "",
-            "```bash",
-            "export OPENAI_API_KEY=gsk_xxx",
-            "export OPENAI_BASE_URL=https://api.groq.com/openai/v1",
-            "",
-            "curl \"$OPENAI_BASE_URL/chat/completions\" \\",
-            "  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\",
-            "  -H \"Content-Type: application/json\" \\",
-            "  -d '{\"model\":\"llama-3.1-8b-instant\",\"messages\":[{\"role\":\"user\",\"content\":\"hello\"}]}'",
-            "```",
-            "",
             "## 如何贡献",
             "",
             "见 [CONTRIBUTING.md](./CONTRIBUTING.md)。",
             "",
-            "1. 编辑 `data/providers.yaml`",
-            "2. 运行 `python scripts/validate.py`",
-            "3. 运行 `python scripts/generate_readme.py`",
-            "4. 提交 PR（勿手改生成的 README）",
+            "1. 在 `data/endpoints.yaml` 增加条目（必须有 `env.LLM_BASE_URL` + `env.LLM_MODEL_NAME`）",
+            "2. `python scripts/validate.py && python scripts/generate_readme.py`",
+            "3. 提交 PR，附上官网/文档链接与是否仅限技术评估的说明",
             "",
-            "## 与同类项目的差异",
+            "## 参考形态",
             "",
-            "| 项目 | 差异 |",
-            "| --- | --- |",
-            "| [cheahjs/free-llm-api-resources](https://github.com/cheahjs/free-llm-api-resources) | 更全，含试用额度；本仓库**只收永久免费**并提供 YAML SSOT + 中英双语 |",
-            "| [mnfst/awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) | Awesome 列表风格；本仓库强调 schema 校验与可生成 README |",
-            "",
-            "致谢上述社区整理工作。",
-            "",
-            "## 维护",
+            "Page Agent 官方文档中的免费测试接口写法：",
             "",
             "```bash",
-            "pip install -r requirements.txt",
-            "python scripts/validate.py",
-            "python scripts/generate_readme.py",
+            '# qwen3.5-plus / qwen3.5-flash',
+            'LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"',
+            'LLM_MODEL_NAME="qwen3.5-plus"',
             "```",
+            "",
+            "来源：<https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api>",
             "",
             "## License",
             "",
@@ -220,90 +229,65 @@ def generate_zh(meta: dict, providers: list) -> str:
     return "\n".join(parts)
 
 
-def generate_en(meta: dict, providers: list) -> str:
-    vendors = [p for p in providers if p["type"] == "model_vendor"]
-    platforms = [p for p in providers if p["type"] == "inference_platform"]
+def generate_en(meta: dict, endpoints: list) -> str:
     updated = meta.get("updated", "")
-    criteria = meta.get("criteria_en", "")
-
     parts = [
-        "# Free LLM API Catalog",
+        "# Free Testing LLM APIs",
         "",
-        "> Official vendors + mainstream inference platforms · **Permanent free tiers only** · Data-driven",
+        "> Catalog of **copy-paste** free testing endpoints: `LLM_BASE_URL` + `LLM_MODEL_NAME`",
+        ">",
+        "> Inspired by [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)",
         "",
-        f"[中文](./README.md) · Source of truth: [`data/providers.yaml`](./data/providers.yaml) · Data updated: `{updated}`",
+        f"[中文](./README.md) · Source: [`data/endpoints.yaml`](./data/endpoints.yaml) · Updated: `{updated}`",
         "",
-        "## What is this",
+        "## What this is / is not",
         "",
-        "A curated catalog of publicly obtainable LLM HTTP APIs where:",
+        "| ✅ We include | ❌ We exclude |",
+        "| --- | --- |",
+        "| Official **project demo testing APIs** | Unofficial reverse proxies / shared keys |",
+        "| **No-signup** public free endpoints | Chat UIs without an HTTP API |",
+        "| Zero-cost keys with **OpenAI-compatible** bases | Marketing fluff without a clear test entry |",
+        "| Every entry has **copy-paste env** | Production SLA guarantees |",
         "",
-        f"- {criteria}",
-        "- Official docs and signup / key pages exist",
-        "- **Excluded**: one-shot trial credits only, unofficial reverse proxies, scraped chatbot UIs",
+        f"**Focus**: {meta.get('focus_en', '')}",
         "",
-        "## Disclaimer",
+        f"**Disclaimer**: {meta.get('disclaimer_en', '')}",
         "",
-        "- Quotas, models, and ToS **change without notice** — always verify official docs.",
-        "- This repo is informational only; no proxies, shared keys, or bypass guides.",
-        "- Read each provider's ToS (commercial use, training, regional limits).",
-        "- Use free tiers responsibly so the community keeps access.",
+        f"## Overview ({len(endpoints)})",
         "",
-        f"## Overview ({len(providers)})",
+        overview_table(endpoints, "en"),
         "",
-        overview_table(providers, "en"),
-        "",
-        "## Model vendor APIs",
-        "",
+        curl_example("en"),
     ]
-    for p in vendors:
-        parts.append(detail_section(p, "en"))
 
-    parts.append("## Inference platforms")
-    parts.append("")
-    for p in platforms:
-        parts.append(detail_section(p, "en"))
+    for cat in CAT_ORDER:
+        group = [e for e in endpoints if e["category"] == cat]
+        if not group:
+            continue
+        parts.append(f"## {CAT_EN[cat]}")
+        parts.append("")
+        for ep in group:
+            parts.append(detail(ep, "en"))
 
     parts.extend(
         [
-            "## Quick start",
-            "",
-            "Most OpenAI-compatible endpoints work like this (Groq example):",
-            "",
-            "```bash",
-            "export OPENAI_API_KEY=gsk_xxx",
-            "export OPENAI_BASE_URL=https://api.groq.com/openai/v1",
-            "",
-            "curl \"$OPENAI_BASE_URL/chat/completions\" \\",
-            "  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\",
-            "  -H \"Content-Type: application/json\" \\",
-            "  -d '{\"model\":\"llama-3.1-8b-instant\",\"messages\":[{\"role\":\"user\",\"content\":\"hello\"}]}'",
-            "```",
-            "",
             "## Contributing",
             "",
             "See [CONTRIBUTING.md](./CONTRIBUTING.md).",
             "",
-            "1. Edit `data/providers.yaml`",
-            "2. Run `python scripts/validate.py`",
-            "3. Run `python scripts/generate_readme.py`",
-            "4. Open a PR (do not hand-edit generated READMEs)",
+            "1. Add an entry to `data/endpoints.yaml` (`env.LLM_BASE_URL` + `env.LLM_MODEL_NAME` required)",
+            "2. `python scripts/validate.py && python scripts/generate_readme.py`",
+            "3. Open a PR with docs links and evaluation-only notes",
             "",
-            "## Related projects",
-            "",
-            "| Project | How we differ |",
-            "| --- | --- |",
-            "| [cheahjs/free-llm-api-resources](https://github.com/cheahjs/free-llm-api-resources) | Broader (includes trial credits); we keep **permanent free only** + YAML SSOT + bilingual docs |",
-            "| [mnfst/awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) | Awesome-list style; we focus on schema validation and generated READMEs |",
-            "",
-            "Thanks to those community efforts.",
-            "",
-            "## Maintenance",
+            "## Reference style",
             "",
             "```bash",
-            "pip install -r requirements.txt",
-            "python scripts/validate.py",
-            "python scripts/generate_readme.py",
+            '# qwen3.5-plus / qwen3.5-flash',
+            'LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"',
+            'LLM_MODEL_NAME="qwen3.5-plus"',
             "```",
+            "",
+            "From: <https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api>",
             "",
             "## License",
             "",
@@ -315,17 +299,14 @@ def generate_en(meta: dict, providers: list) -> str:
 
 
 def main() -> int:
-    meta, providers = load_providers()
-    # stable sort: vendors first, then platforms, then name
-    providers = sorted(
-        providers,
-        key=lambda p: (0 if p["type"] == "model_vendor" else 1, p["name"].lower()),
+    meta, endpoints = load()
+    endpoints = sorted(
+        endpoints,
+        key=lambda e: (CAT_ORDER.index(e["category"]) if e["category"] in CAT_ORDER else 99, e["name"].lower()),
     )
-    zh = generate_zh(meta, providers)
-    en = generate_en(meta, providers)
-    (ROOT / "README.md").write_text(zh, encoding="utf-8", newline="\n")
-    (ROOT / "README.en.md").write_text(en, encoding="utf-8", newline="\n")
-    print(f"Wrote README.md and README.en.md ({len(providers)} providers)")
+    (ROOT / "README.md").write_text(generate_zh(meta, endpoints), encoding="utf-8", newline="\n")
+    (ROOT / "README.en.md").write_text(generate_en(meta, endpoints), encoding="utf-8", newline="\n")
+    print(f"Wrote README.md and README.en.md ({len(endpoints)} endpoints)")
     return 0
 
 

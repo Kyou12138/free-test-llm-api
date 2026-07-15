@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Validate data/providers.yaml against schema and project rules."""
+"""Validate data/endpoints.yaml against schema and project rules."""
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -10,88 +11,77 @@ from pathlib import Path
 try:
     import yaml
 except ImportError:
-    print("Missing dependency: PyYAML. Install with: pip install pyyaml jsonschema", file=sys.stderr)
+    print("Missing dependency: PyYAML. pip install -r requirements.txt", file=sys.stderr)
     sys.exit(1)
 
 try:
     from jsonschema import Draft202012Validator
 except ImportError:
-    print("Missing dependency: jsonschema. Install with: pip install pyyaml jsonschema", file=sys.stderr)
+    print("Missing dependency: jsonschema. pip install -r requirements.txt", file=sys.stderr)
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "providers.yaml"
-SCHEMA = ROOT / "schema" / "provider.schema.json"
-
+DATA = ROOT / "data" / "endpoints.yaml"
+SCHEMA = ROOT / "schema" / "endpoint.schema.json"
 URL_RE = re.compile(r"^https?://", re.I)
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-
-
-def load_yaml(path: Path):
-    with path.open(encoding="utf-8") as f:
-        return yaml.safe_load(f)
-
-
-def load_schema(path: Path):
-    import json
-
-    with path.open(encoding="utf-8") as f:
-        return json.load(f)
+CATEGORIES = {"project_demo", "anonymous_public", "free_token"}
 
 
 def main() -> int:
     if not DATA.exists():
         print(f"ERROR: missing {DATA}", file=sys.stderr)
         return 1
-    if not SCHEMA.exists():
-        print(f"ERROR: missing {SCHEMA}", file=sys.stderr)
+
+    with DATA.open(encoding="utf-8") as f:
+        doc = yaml.safe_load(f)
+    with SCHEMA.open(encoding="utf-8") as f:
+        schema = json.load(f)
+
+    if not isinstance(doc, dict) or "endpoints" not in doc:
+        print("ERROR: endpoints.yaml must contain top-level 'endpoints' list", file=sys.stderr)
         return 1
 
-    doc = load_yaml(DATA)
-    schema = load_schema(SCHEMA)
-    errors: list[str] = []
-
-    if not isinstance(doc, dict) or "providers" not in doc:
-        print("ERROR: providers.yaml must contain a top-level 'providers' list", file=sys.stderr)
-        return 1
-
-    providers = doc["providers"]
-    if not isinstance(providers, list) or not providers:
-        print("ERROR: providers list is empty", file=sys.stderr)
+    endpoints = doc["endpoints"]
+    if not isinstance(endpoints, list) or not endpoints:
+        print("ERROR: endpoints list is empty", file=sys.stderr)
         return 1
 
     validator = Draft202012Validator(schema)
-    seen_ids: set[str] = set()
+    errors: list[str] = []
+    seen: set[str] = set()
 
-    for i, p in enumerate(providers):
-        prefix = f"providers[{i}]"
-        if not isinstance(p, dict):
-            errors.append(f"{prefix}: must be an object")
+    for i, ep in enumerate(endpoints):
+        prefix = f"endpoints[{i}]"
+        if not isinstance(ep, dict):
+            errors.append(f"{prefix}: must be object")
             continue
 
-        for err in sorted(validator.iter_errors(p), key=lambda e: list(e.path)):
+        for err in sorted(validator.iter_errors(ep), key=lambda e: list(e.path)):
             loc = ".".join(str(x) for x in err.path) or "(root)"
             errors.append(f"{prefix}.{loc}: {err.message}")
 
-        pid = p.get("id")
-        if pid in seen_ids:
-            errors.append(f"{prefix}.id: duplicate id '{pid}'")
-        seen_ids.add(pid)
+        eid = ep.get("id")
+        if eid in seen:
+            errors.append(f"{prefix}.id: duplicate '{eid}'")
+        seen.add(eid)
 
-        ft = p.get("free_tier") or {}
-        if ft.get("permanent") is not True:
-            errors.append(f"{prefix}.free_tier.permanent: must be true (trial-only credits are out of scope)")
+        if ep.get("category") not in CATEGORIES:
+            errors.append(f"{prefix}.category: must be one of {sorted(CATEGORIES)}")
 
-        for key in ("website", "docs", "api_key_url"):
-            url = p.get(key, "")
-            if url and not URL_RE.match(str(url)):
+        for key in ("base_url", "source_docs"):
+            val = ep.get(key, "")
+            if val and not URL_RE.match(str(val)):
                 errors.append(f"{prefix}.{key}: must be http(s) URL")
 
-        base = p.get("base_url")
-        if base is not None and base != "" and not URL_RE.match(str(base)):
-            errors.append(f"{prefix}.base_url: must be http(s) URL or null")
+        env = ep.get("env") or {}
+        if "LLM_BASE_URL" not in env or "LLM_MODEL_NAME" not in env:
+            errors.append(f"{prefix}.env: requires LLM_BASE_URL and LLM_MODEL_NAME")
 
-        lv = p.get("last_verified", "")
+        if ep.get("api_key_required") and not ep.get("api_key_url") and "LLM_API_KEY" not in env:
+            errors.append(f"{prefix}: api_key_required true needs api_key_url or env.LLM_API_KEY hint")
+
+        lv = ep.get("last_verified", "")
         if lv and not DATE_RE.match(str(lv)):
             errors.append(f"{prefix}.last_verified: expected YYYY-MM-DD")
 
@@ -101,9 +91,11 @@ def main() -> int:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
-    vendors = sum(1 for p in providers if p.get("type") == "model_vendor")
-    platforms = sum(1 for p in providers if p.get("type") == "inference_platform")
-    print(f"OK: {len(providers)} providers ({vendors} model_vendor, {platforms} inference_platform)")
+    by_cat: dict[str, int] = {}
+    for ep in endpoints:
+        by_cat[ep["category"]] = by_cat.get(ep["category"], 0) + 1
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(by_cat.items()))
+    print(f"OK: {len(endpoints)} endpoints ({summary})")
     return 0
 
 

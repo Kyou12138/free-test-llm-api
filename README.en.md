@@ -1,357 +1,336 @@
-# Free LLM API Catalog
+# Free Testing LLM APIs
 
-> Official vendors + mainstream inference platforms · **Permanent free tiers only** · Data-driven
+> Catalog of **copy-paste** free testing endpoints: `LLM_BASE_URL` + `LLM_MODEL_NAME`
+>
+> Inspired by [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)
 
-[中文](./README.md) · Source of truth: [`data/providers.yaml`](./data/providers.yaml) · Data updated: `2026-07-15`
+[中文](./README.md) · Source: [`data/endpoints.yaml`](./data/endpoints.yaml) · Updated: `2026-07-15`
 
-## What is this
+## What this is / is not
 
-A curated catalog of publicly obtainable LLM HTTP APIs where:
+| ✅ We include | ❌ We exclude |
+| --- | --- |
+| Official **project demo testing APIs** | Unofficial reverse proxies / shared keys |
+| **No-signup** public free endpoints | Chat UIs without an HTTP API |
+| Zero-cost keys with **OpenAI-compatible** bases | Marketing fluff without a clear test entry |
+| Every entry has **copy-paste env** | Production SLA guarantees |
 
-- Permanent free tiers only from model vendors and mainstream inference platforms. No one-shot trial credits or unofficial reverse proxies.
-- Official docs and signup / key pages exist
-- **Excluded**: one-shot trial credits only, unofficial reverse proxies, scraped chatbot UIs
+**Focus**: Copy-paste free testing LLM endpoints (BASE_URL + MODEL), not permanent free-tier signup catalogs.
 
-## Disclaimer
+**Disclaimer**: Most endpoints are for technical evaluation only; may be rate-limited or removed anytime. Not for production or sensitive data. Follow each project's terms.
 
-- Quotas, models, and ToS **change without notice** — always verify official docs.
-- This repo is informational only; no proxies, shared keys, or bypass guides.
-- Read each provider's ToS (commercial use, training, regional limits).
-- Use free tiers responsibly so the community keeps access.
+## Overview (11)
 
-## Overview (19)
-
-| Name | Type | Region | OpenAI-compatible | Card required | Status | Docs |
+| Name | Category | Region | Needs key | OpenAI-compatible | Status | Docs |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Aion Labs](https://www.aionlabs.ai) | Model vendor | IL | Yes | No | ✅ active | [docs](https://www.aionlabs.ai) |
-| [Cohere](https://cohere.com) | Model vendor | CA | No | No | ✅ active | [docs](https://docs.cohere.com/) |
-| [Google AI Studio (Gemini)](https://aistudio.google.com) | Model vendor | US | Yes | No | ✅ active | [docs](https://ai.google.dev/gemini-api/docs) |
-| [Mistral AI (La Plateforme)](https://console.mistral.ai/) | Model vendor | FR | Yes | No | ✅ active | [docs](https://docs.mistral.ai/) |
-| [Z.AI (Zhipu / BigModel)](https://open.bigmodel.cn/) | Model vendor | CN | Yes | No | ✅ active | [docs](https://docs.bigmodel.cn/) |
-| [Cerebras Inference](https://cloud.cerebras.ai/) | Inference platform | US | Yes | No | ✅ active | [docs](https://inference-docs.cerebras.ai/) |
-| [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) | Inference platform | US | No | No | ✅ active | [docs](https://developers.cloudflare.com/workers-ai/) |
-| [GitHub Models](https://github.com/marketplace/models) | Inference platform | US | Yes | No | ✅ active | [docs](https://docs.github.com/en/github-models) |
-| [Groq](https://console.groq.com) | Inference platform | US | Yes | No | ✅ active | [docs](https://console.groq.com/docs) |
-| [Hugging Face Inference Providers](https://huggingface.co) | Inference platform | US | Yes | No | ✅ active | [docs](https://huggingface.co/docs/inference-providers) |
-| [LLM7.io](https://llm7.io) | Inference platform | GB | Yes | No | ⚠️ limited | [docs](https://llm7.io) |
-| [ModelScope API-Inference](https://modelscope.cn) | Inference platform | CN | Yes | No | ✅ active | [docs](https://modelscope.cn/docs/model-service/API-Inference/intro) |
-| [NVIDIA NIM](https://build.nvidia.com/explore/discover) | Inference platform | US | Yes | No | ✅ active | [docs](https://docs.api.nvidia.com/) |
-| [Ollama Cloud](https://ollama.com) | Inference platform | US | No | No | ✅ active | [docs](https://docs.ollama.com/cloud) |
-| [OpenRouter (free models)](https://openrouter.ai) | Inference platform | US | Yes | No | ✅ active | [docs](https://openrouter.ai/docs) |
-| [OVHcloud AI Endpoints](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/) | Inference platform | EU | Yes | No | ✅ active | [docs](https://help.ovhcloud.com/csm/en-public-cloud-ai-endpoints) |
-| [SambaNova Cloud](https://cloud.sambanova.ai/) | Inference platform | US | Yes | No | ✅ active | [docs](https://docs.sambanova.ai/) |
-| [SiliconFlow](https://siliconflow.cn) | Inference platform | CN | Yes | No | ✅ active | [docs](https://docs.siliconflow.cn/) |
-| [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) | Inference platform | US | Yes | No | ✅ active | [docs](https://vercel.com/docs/ai-gateway) |
+| [Page Agent Free Testing API (Qwen)](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api) | `project_demo` | CN | No | Yes | ✅ active | [docs](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api) |
+| [OVHcloud AI Endpoints (Anonymous Free)](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/) | `anonymous` | EU | No | Yes | ✅ active | [docs](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/) |
+| [Cerebras Inference Free](https://inference-docs.cerebras.ai/) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://inference-docs.cerebras.ai/) |
+| [GitHub Models](https://docs.github.com/en/github-models) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://docs.github.com/en/github-models) |
+| [Google AI Studio (Gemini Free)](https://ai.google.dev/gemini-api/docs) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://ai.google.dev/gemini-api/docs) |
+| [Groq Free Tier](https://console.groq.com/docs) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://console.groq.com/docs) |
+| [LLM7.io](https://llm7.io) | `free_token` | GB | Yes | Yes | ✅ active | [docs](https://llm7.io) |
+| [NVIDIA NIM (Developer Free)](https://docs.api.nvidia.com/) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://docs.api.nvidia.com/) |
+| [OpenRouter Free Models](https://openrouter.ai/docs) | `free_token` | US | Yes | Yes | ✅ active | [docs](https://openrouter.ai/docs) |
+| [SiliconFlow Free Models](https://docs.siliconflow.cn/) | `free_token` | CN | Yes | Yes | ✅ active | [docs](https://docs.siliconflow.cn/) |
+| [Z.AI / Zhipu Free Flash Models](https://docs.bigmodel.cn/) | `free_token` | CN | Yes | Yes | ✅ active | [docs](https://docs.bigmodel.cn/) |
 
-## Model vendor APIs
+## Call example (OpenAI-compatible)
 
-### Aion Labs
+Example using the **OVH anonymous** endpoint (no key):
 
-- **Type**: Model vendor · **Region**: IL · **Status**: ✅ active
-- **Website**: https://www.aionlabs.ai
-- **Docs**: https://www.aionlabs.ai
-- **API key**: https://www.aionlabs.ai
-- **Base URL**: `https://api.aionlabs.ai/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: 15 RPM, ~20K tokens/day
-- **Commercial use**: `unknown` · **Data use**: unknown
-- **Sample models**: `aion-2.5`, `aion-2.0`, `aion-rp-1.0`
-- **Notes**: Permanent free tier focused on roleplay/storytelling; no card required.
-- **Last verified**: `2026-07-15`
+```bash
+export LLM_BASE_URL="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+export LLM_MODEL_NAME="Meta-Llama-3_3-70B-Instruct"
 
-### Cohere
+curl "$LLM_BASE_URL/chat/completions" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"$LLM_MODEL_NAME\",
+    \"messages\": [{\"role\": \"user\", \"content\": \"hello\"}],
+    \"max_tokens\": 64
+  }"
+```
 
-- **Type**: Model vendor · **Region**: CA · **Status**: ✅ active
-- **Website**: https://cohere.com
-- **Docs**: https://docs.cohere.com/
-- **API key**: https://dashboard.cohere.com/api-keys
-- **Base URL**: `https://api.cohere.com/v2`
-- **OpenAI-compatible**: No · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: 20 RPM, ~1,000 requests/month (shared)
-- **Commercial use**: `no` · **Data use**: unknown
-- **Sample models**: `command-a-03-2025`, `command-r-plus-08-2024`, `command-r7b-12-2024`, `command-a-vision-07-2025`
-- **Notes**: Trial/free API key, typically no card; ~1,000 calls/month, 20 RPM; non-commercial limits — read ToS.
-- **Last verified**: `2026-07-15`
+## Project official testing APIs (demo / evaluation)
 
-### Google AI Studio (Gemini)
+### Page Agent Free Testing API (Qwen)
 
-- **Type**: Model vendor · **Region**: US · **Status**: ✅ active
-- **Website**: https://aistudio.google.com
-- **Docs**: https://ai.google.dev/gemini-api/docs
-- **API key**: https://aistudio.google.com/app/apikey
-- **Base URL**: `https://generativelanguage.googleapis.com/v1beta`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Per-model; e.g. Flash-class often ~5–30 RPM / tens–thousands RPD; Gemma often higher RPD
-- **Commercial use**: `restricted` · **Data use**: may be used for training/improvement
-- **Sample models**: `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-3.1-flash-lite`, `gemma-3-27b-it`
-- **Notes**: Free tier may be unavailable in EU/UK/CH. Free-tier prompts may be used to improve products outside certain regions. Quotas change; verify official docs.
-- **Last verified**: `2026-07-15`
+- **Category**: `project_demo` · **Provider**: Alibaba page-agent maintainers (via Alibaba Cloud FC + BaiLian) · **Region**: CN
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run`
+- **API key required**: No
+- **Sample models**: `qwen3.5-plus`, `qwen3.5-flash`
+- **Docs**: https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api
+- **Repo**: https://github.com/alibaba/page-agent
+- **Terms**: https://github.com/alibaba/page-agent/blob/main/docs/terms-and-privacy.md#2-testing-api-and-demo-disclaimer--terms-of-use
 
-### Mistral AI (La Plateforme)
+**Copy-paste config**
 
-- **Type**: Model vendor · **Region**: FR · **Status**: ✅ active
-- **Website**: https://console.mistral.ai/
-- **Docs**: https://docs.mistral.ai/
-- **API key**: https://console.mistral.ai/api-keys
-- **Base URL**: `https://api.mistral.ai/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: Yes
-- **Rate / quota (summary)**: ~1 RPS, ~500K TPM, ~1B tokens/month per model (Experiment)
-- **Commercial use**: `restricted` · **Data use**: may be used for training/improvement
-- **Sample models**: `mistral-small-latest`, `mistral-medium-latest`, `codestral-latest`, `mistral-nemo`
-- **Notes**: Experiment plan free tier; phone verification usually required; may require opt-in for training. ~1B tokens/month class limits (verify docs).
-- **Last verified**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"
+LLM_MODEL_NAME="qwen3.5-plus"
+```
 
-### Z.AI (Zhipu / BigModel)
+**Restrictions**
 
-- **Type**: Model vendor · **Region**: CN · **Status**: ✅ active
-- **Website**: https://open.bigmodel.cn/
-- **Docs**: https://docs.bigmodel.cn/
-- **API key**: https://open.bigmodel.cn/usercenter/apikeys
-- **Base URL**: `https://open.bigmodel.cn/api/paas/v4`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Often ~1 concurrent on free Flash models (verify)
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `glm-4.7-flash`, `glm-4.6v-flash`
-- **Notes**: Permanent free models (e.g. GLM Flash family); concurrency/quotas per console. International portals may differ.
-- **Last verified**: `2026-07-15`
+> Strictly for PageAgent.js / Extension technical evaluation and R&D.
+> No production use; no PII/sensitive data; processed via Mainland China servers.
+> Proxy validates requests: first message must be system/developer and system prompt must match official page-agent prompt (generic chat may be rejected).
+> May be rate-limited or discontinued without notice.
 
-## Inference platforms
+## Anonymous public endpoints (no key)
 
-### Cerebras Inference
+### OVHcloud AI Endpoints (Anonymous Free)
 
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://cloud.cerebras.ai/
-- **Docs**: https://inference-docs.cerebras.ai/
-- **API key**: https://cloud.cerebras.ai/
+- **Category**: `anonymous_public` · **Provider**: OVHcloud · **Region**: EU
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1`
+- **API key required**: No
+- **Sample models**: `Meta-Llama-3_3-70B-Instruct`, `Llama-3.1-8B-Instruct`, `gpt-oss-120b`, `gpt-oss-20b`, `Qwen3-32B`, `Qwen3-Coder-30B-A3B-Instruct`, `Mistral-Small-3.2-24B-Instruct`, `Mistral-Nemo-Instruct-2407`, `Mistral-7B-Instruct-v0.3`
+- **Docs**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/
+- **Terms**: https://www.ovhcloud.com/en/terms-and-conditions/
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"
+LLM_MODEL_NAME="Meta-Llama-3_3-70B-Instruct"
+```
+
+**Restrictions**
+
+> Anonymous tier: no signup, no API key; about 2 RPM per IP per model (verify docs).
+> Good for wiring OpenAI SDK / agents; higher limits need OVH account + billing project.
+> EU-hosted. Catalog may change — check GET /v1/models.
+
+## Free token / free tier (key required)
+
+### Cerebras Inference Free
+
+- **Category**: `free_token` · **Provider**: Cerebras · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
 - **Base URL**: `https://api.cerebras.ai/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: e.g. gpt-oss-120b: ~30 RPM, ~14.4K RPD, ~1M TPD (verify)
-- **Commercial use**: `yes` · **Data use**: typically not for training
-- **Sample models**: `gpt-oss-120b`, `llama3.1-8b`
-- **Notes**: Wafer-scale ultra-fast inference; free model catalog and context caps can change.
-- **Last verified**: `2026-07-15`
+- **API key required**: Yes · [Get key](https://cloud.cerebras.ai/)
+- **Sample models**: `llama3.1-8b`, `gpt-oss-120b`
+- **Docs**: https://inference-docs.cerebras.ai/
+- **Terms**: https://www.cerebras.ai/terms-of-service
 
-### Cloudflare Workers AI
+**Copy-paste config**
 
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://developers.cloudflare.com/workers-ai/
-- **Docs**: https://developers.cloudflare.com/workers-ai/
-- **API key**: https://dash.cloudflare.com/profile/api-tokens
-- **Base URL**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run`
-- **OpenAI-compatible**: No · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: ~10,000 neurons/day shared across models
-- **Commercial use**: `yes` · **Data use**: unknown
-- **Sample models**: `@cf/meta/llama-3.3-70b-instruct-fp8-fast`, `@cf/meta/llama-4-scout-17b-16e-instruct`, `@cf/openai/gpt-oss-120b`, `@cf/qwen/qwen3-30b-a3b-fp8`
-- **Notes**: Daily free Neurons allocation (e.g. 10,000/day); large model catalog.
-- **Last verified**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://api.cerebras.ai/v1"
+LLM_MODEL_NAME="llama3.1-8b"
+LLM_API_KEY="<https://cloud.cerebras.ai/>"
+```
+
+**Restrictions**
+
+> Free-tier key; very high throughput for client/streaming tests.
+> Free model list and context caps can change abruptly.
 
 ### GitHub Models
 
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://github.com/marketplace/models
-- **Docs**: https://docs.github.com/en/github-models
-- **API key**: https://github.com/settings/tokens
+- **Category**: `free_token` · **Provider**: GitHub · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
 - **Base URL**: `https://models.github.ai/inference`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Tier-based RPM/RPD (e.g. free often ~10–15 RPM / ~50–150 RPD class)
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `openai/gpt-4.1-mini`, `meta/Llama-3.3-70B-Instruct`, `deepseek/DeepSeek-R1`, `mistral-ai/Mistral-Small-3.1`
-- **Notes**: For prototyping; limits depend on Copilot tier; per-request input/output caps are strict.
-- **Last verified**: `2026-07-15`
+- **API key required**: Yes · [Get key](https://github.com/settings/tokens)
+- **Sample models**: `openai/gpt-4.1-mini`, `openai/gpt-4o-mini`, `meta/Llama-3.3-70B-Instruct`, `deepseek/DeepSeek-R1`
+- **Docs**: https://docs.github.com/en/github-models
+- **Terms**: https://docs.github.com/en/site-policy
 
-### Groq
+**Copy-paste config**
 
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://console.groq.com
-- **Docs**: https://console.groq.com/docs
-- **API key**: https://console.groq.com/keys
+```bash
+LLM_BASE_URL="https://models.github.ai/inference"
+LLM_MODEL_NAME="openai/gpt-4.1-mini"
+LLM_API_KEY="<GitHub PAT with models access>"
+```
+
+**Restrictions**
+
+> Use a GitHub token with models permissions for prototyping.
+> Limits depend on Copilot tier; strict per-request caps — good for feature tests.
+
+### Google AI Studio (Gemini Free)
+
+- **Category**: `free_token` · **Provider**: Google · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://generativelanguage.googleapis.com/v1beta/openai`
+- **API key required**: Yes · [Get key](https://aistudio.google.com/app/apikey)
+- **Sample models**: `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-2.0-flash`
+- **Docs**: https://ai.google.dev/gemini-api/docs
+- **Terms**: https://ai.google.dev/gemini-api/terms
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai"
+LLM_MODEL_NAME="gemini-2.5-flash"
+LLM_API_KEY="<https://aistudio.google.com/app/apikey>"
+```
+
+**Restrictions**
+
+> Free API key via AI Studio; free tier unavailable in some regions.
+> Read ToS for data use / regional limits; quotas vary by model.
+
+### Groq Free Tier
+
+- **Category**: `free_token` · **Provider**: Groq · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
 - **Base URL**: `https://api.groq.com/openai/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Model-dependent; e.g. ~30 RPM, ~1K–14K RPD, TPM in thousands–tens of thousands
-- **Commercial use**: `yes` · **Data use**: typically not for training
-- **Sample models**: `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `openai/gpt-oss-120b`, `qwen/qwen3-32b`
-- **Notes**: Ultra-fast LPU inference; free tier has RPM/TPM/RPD caps (tighter RPD on larger models).
-- **Last verified**: `2026-07-15`
+- **API key required**: Yes · [Get key](https://console.groq.com/keys)
+- **Sample models**: `llama-3.1-8b-instant`, `llama-3.3-70b-versatile`, `openai/gpt-oss-20b`, `qwen/qwen3-32b`
+- **Docs**: https://console.groq.com/docs
+- **Terms**: https://groq.com/terms-of-use/
 
-### Hugging Face Inference Providers
+**Copy-paste config**
 
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://huggingface.co
-- **Docs**: https://huggingface.co/docs/inference-providers
-- **API key**: https://huggingface.co/settings/tokens
-- **Base URL**: `https://router.huggingface.co/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Credit-metered monthly free allocation
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `meta-llama/Meta-Llama-3.1-8B-Instruct`, `mistralai/Mistral-7B-Instruct-v0.3`, `Qwen/Qwen2.5-7B-Instruct`
-- **Notes**: Free users get monthly Inference Provider credits (e.g. ~$0.10 class); routes to multiple backends.
-- **Last verified**: `2026-07-15`
+```bash
+LLM_BASE_URL="https://api.groq.com/openai/v1"
+LLM_MODEL_NAME="llama-3.1-8b-instant"
+LLM_API_KEY="<https://console.groq.com/keys>"
+```
+
+**Restrictions**
+
+> Free console key, typically no card for testing; RPM/TPM/RPD limits apply.
+> Great for latency-sensitive wiring; verify official rate-limits page.
 
 ### LLM7.io
 
-- **Type**: Inference platform · **Region**: GB · **Status**: ⚠️ limited
-- **Website**: https://llm7.io
-- **Docs**: https://llm7.io
-- **API key**: https://token.llm7.io
+- **Category**: `free_token` · **Provider**: LLM7.io · **Region**: GB
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
 - **Base URL**: `https://api.llm7.io/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: ~30 RPM default; ~120 RPM with token
-- **Commercial use**: `unknown` · **Data use**: unknown
-- **Sample models**: `gemini-2.5-flash-lite`, `mistral-small-3.1-24b`, `qwen2.5-coder-32b`
-- **Notes**: Low-friction gateway; basic access without signup; higher limits with token. Third-party aggregation — evaluate stability/compliance yourself.
-- **Last verified**: `2026-07-15`
+- **API key required**: Yes · [Get key](https://token.llm7.io)
+- **Sample models**: `deepseek-v4-flash`, `gemma3:27b`, `gpt-5.4-mini`, `kimi-k2.6`, `minimax-m2.7`
+- **Docs**: https://llm7.io
+- **Terms**: https://llm7.io
 
-### ModelScope API-Inference
-
-- **Type**: Inference platform · **Region**: CN · **Status**: ✅ active
-- **Website**: https://modelscope.cn
-- **Docs**: https://modelscope.cn/docs/model-service/API-Inference/intro
-- **API key**: https://modelscope.cn/my/myaccesstoken
-- **Base URL**: `https://api-inference.modelscope.cn/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: Yes
-- **Rate / quota (summary)**: e.g. ~2,000 RPD total, per-model cap ~500 RPD (dynamic)
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `Qwen/Qwen3.5-35B-A3B`, `Qwen/Qwen3.5-27B`
-- **Notes**: Free API-Inference for registered users; often needs Alibaba Cloud binding + real-name verification; dynamic daily quotas.
-- **Last verified**: `2026-07-15`
-
-### NVIDIA NIM
-
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://build.nvidia.com/explore/discover
-- **Docs**: https://docs.api.nvidia.com/
-- **API key**: https://build.nvidia.com/
-- **Base URL**: `https://integrate.api.nvidia.com/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: Yes
-- **Rate / quota (summary)**: ~40 RPM (typical free); no simple public daily token cap
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `meta/llama-3.1-405b-instruct`, `deepseek-ai/deepseek-r1`, `nvidia/nemotron-3-super-120b-a12b`, `qwen/qwen2.5-72b-instruct`
-- **Notes**: Free with NVIDIA Developer Program; phone verification common; context often limited.
-- **Last verified**: `2026-07-15`
-
-### Ollama Cloud
-
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://ollama.com
-- **Docs**: https://docs.ollama.com/cloud
-- **API key**: https://ollama.com/settings/keys
-- **Base URL**: `https://api.ollama.com`
-- **OpenAI-compatible**: No · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Session/weekly qualitative limits (unpublished exact numbers)
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `gpt-oss:120b-cloud`, `deepseek-r1:cloud`, `qwen3-coder:480b-cloud`
-- **Notes**: Free light-usage tier; limits are session/weekly and not always fully published; Ollama API, not stock OpenAI SDK.
-- **Last verified**: `2026-07-15`
-
-### OpenRouter (free models)
-
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://openrouter.ai
-- **Docs**: https://openrouter.ai/docs
-- **API key**: https://openrouter.ai/keys
-- **Base URL**: `https://openrouter.ai/api/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: e.g. ~20 RPM, ~50–200 RPD default; up to ~1000 RPD after $10 lifetime top-up
-- **Commercial use**: `restricted` · **Data use**: may be used for training/improvement
-- **Sample models**: `qwen/qwen3-coder:free`, `meta-llama/llama-3.3-70b-instruct:free`, `openai/gpt-oss-20b:free`, `google/gemma-4-31b-it:free`
-- **Notes**: Only `:free` models count. Free models work without balance. Providers may log prompts. Lifetime top-up can raise free-model RPD.
-- **Last verified**: `2026-07-15`
-
-### OVHcloud AI Endpoints
-
-- **Type**: Inference platform · **Region**: EU · **Status**: ✅ active
-- **Website**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/
-- **Docs**: https://help.ovhcloud.com/csm/en-public-cloud-ai-endpoints
-- **API key**: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/
-- **Base URL**: `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Anonymous ~2 RPM/IP/model; authenticated higher (paid)
-- **Commercial use**: `yes` · **Data use**: unknown
-- **Sample models**: `Meta-Llama-3_3-70B-Instruct`, `gpt-oss-120b`, `Mistral-Small-3.2-24B-Instruct`, `Qwen3-Coder-30B-A3B-Instruct`
-- **Notes**: Anonymous free tier: no signup/key, ~2 RPM per IP per model; higher limits need paid project. EU-hosted.
-- **Last verified**: `2026-07-15`
-
-### SambaNova Cloud
-
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://cloud.sambanova.ai/
-- **Docs**: https://docs.sambanova.ai/
-- **API key**: https://cloud.sambanova.ai/apis
-- **Base URL**: `https://api.sambanova.ai/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: ~20 RPM, ~20 RPD, ~200K TPD per model (verify)
-- **Commercial use**: `yes` · **Data use**: unknown
-- **Sample models**: `Meta-Llama-3.3-70B-Instruct`, `DeepSeek-V3.1`, `gpt-oss-120b`
-- **Notes**: Ongoing free tier (RPM/RPD/TPD). Signup trial credits may exist separately; permanent free tier is what qualifies.
-- **Last verified**: `2026-07-15`
-
-### SiliconFlow
-
-- **Type**: Inference platform · **Region**: CN · **Status**: ✅ active
-- **Website**: https://siliconflow.cn
-- **Docs**: https://docs.siliconflow.cn/
-- **API key**: https://cloud.siliconflow.cn/account/ak
-- **Base URL**: `https://api.siliconflow.cn/v1`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: e.g. free models ~30 RPM / ~60K TPM class (verify)
-- **Commercial use**: `restricted` · **Data use**: unknown
-- **Sample models**: `Qwen/Qwen3-8B`, `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B`
-- **Notes**: Selected models permanently free; many others paid. OpenAI-compatible API.
-- **Last verified**: `2026-07-15`
-
-### Vercel AI Gateway
-
-- **Type**: Inference platform · **Region**: US · **Status**: ✅ active
-- **Website**: https://vercel.com/docs/ai-gateway
-- **Docs**: https://vercel.com/docs/ai-gateway
-- **API key**: https://vercel.com/account/tokens
-- **Base URL**: `—`
-- **OpenAI-compatible**: Yes · **Card required**: No · **Phone**: No
-- **Rate / quota (summary)**: Monthly free credit allowance
-- **Commercial use**: `yes` · **Data use**: unknown
-- **Sample models**: `various-via-gateway`
-- **Notes**: Gateway to multiple providers; monthly free allowance (e.g. ~$5/month class — verify pricing page).
-- **Last verified**: `2026-07-15`
-
-## Quick start
-
-Most OpenAI-compatible endpoints work like this (Groq example):
+**Copy-paste config**
 
 ```bash
-export OPENAI_API_KEY=gsk_xxx
-export OPENAI_BASE_URL=https://api.groq.com/openai/v1
-
-curl "$OPENAI_BASE_URL/chat/completions" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"llama-3.1-8b-instant","messages":[{"role":"user","content":"hello"}]}'
+LLM_BASE_URL="https://api.llm7.io/v1"
+LLM_MODEL_NAME="deepseek-v4-flash"
+LLM_API_KEY="<get free token at https://token.llm7.io>"
 ```
+
+**Restrictions**
+
+> Free token available; limits per official site (token usually raises RPM).
+> Third-party gateway — evaluate stability, compliance, and data path yourself.
+> Model availability changes; good for quick OpenAI-compatible client tests.
+
+### NVIDIA NIM (Developer Free)
+
+- **Category**: `free_token` · **Provider**: NVIDIA · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://integrate.api.nvidia.com/v1`
+- **API key required**: Yes · [Get key](https://build.nvidia.com/)
+- **Sample models**: `meta/llama-3.1-8b-instruct`, `microsoft/phi-3-mini-4k-instruct`, `google/gemma-2-9b-it`
+- **Docs**: https://docs.api.nvidia.com/
+- **Terms**: https://www.nvidia.com/en-us/about-nvidia/privacy-policy/
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://integrate.api.nvidia.com/v1"
+LLM_MODEL_NAME="meta/llama-3.1-8b-instruct"
+LLM_API_KEY="<https://build.nvidia.com/>"
+```
+
+**Restrictions**
+
+> Free access for NVIDIA Developer Program members; signup/verification usual.
+> Rate-limited and often context-capped — fine for model smoke tests.
+
+### OpenRouter Free Models
+
+- **Category**: `free_token` · **Provider**: OpenRouter · **Region**: US
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://openrouter.ai/api/v1`
+- **API key required**: Yes · [Get key](https://openrouter.ai/keys)
+- **Sample models**: `openrouter/free`, `meta-llama/llama-3.3-70b-instruct:free`, `qwen/qwen3-coder:free`, `openai/gpt-oss-20b:free`, `google/gemma-4-31b-it:free`
+- **Docs**: https://openrouter.ai/docs
+- **Terms**: https://openrouter.ai/terms
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://openrouter.ai/api/v1"
+LLM_MODEL_NAME="openrouter/free"
+LLM_API_KEY="<https://openrouter.ai/keys>"
+```
+
+**Restrictions**
+
+> Free API key after signup; use models with `:free` suffix (or free router).
+> Low default daily limits; free providers may log prompts. For dev/testing.
+
+### SiliconFlow Free Models
+
+- **Category**: `free_token` · **Provider**: SiliconFlow · **Region**: CN
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://api.siliconflow.cn/v1`
+- **API key required**: Yes · [Get key](https://cloud.siliconflow.cn/account/ak)
+- **Sample models**: `Qwen/Qwen3-8B`, `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B`
+- **Docs**: https://docs.siliconflow.cn/
+- **Terms**: https://docs.siliconflow.cn/
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://api.siliconflow.cn/v1"
+LLM_MODEL_NAME="Qwen/Qwen3-8B"
+LLM_API_KEY="<https://cloud.siliconflow.cn/account/ak>"
+```
+
+**Restrictions**
+
+> Create a key after signup; some models permanently free, others paid.
+> Trust console free-model labels; convenient for CN network testing.
+
+### Z.AI / Zhipu Free Flash Models
+
+- **Category**: `free_token` · **Provider**: Zhipu / Z.AI · **Region**: CN
+- **Status**: ✅ active · **Last verified**: `2026-07-15`
+- **Base URL**: `https://open.bigmodel.cn/api/paas/v4`
+- **API key required**: Yes · [Get key](https://open.bigmodel.cn/usercenter/apikeys)
+- **Sample models**: `glm-4.7-flash`, `glm-4.6v-flash`
+- **Docs**: https://docs.bigmodel.cn/
+- **Terms**: https://open.bigmodel.cn/
+
+**Copy-paste config**
+
+```bash
+LLM_BASE_URL="https://open.bigmodel.cn/api/paas/v4"
+LLM_MODEL_NAME="glm-4.7-flash"
+LLM_API_KEY="<https://open.bigmodel.cn/usercenter/apikeys>"
+```
+
+**Restrictions**
+
+> Official permanent free Flash-class models; concurrency/quotas per console.
+> Useful for Chinese-language feature validation.
 
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-1. Edit `data/providers.yaml`
-2. Run `python scripts/validate.py`
-3. Run `python scripts/generate_readme.py`
-4. Open a PR (do not hand-edit generated READMEs)
+1. Add an entry to `data/endpoints.yaml` (`env.LLM_BASE_URL` + `env.LLM_MODEL_NAME` required)
+2. `python scripts/validate.py && python scripts/generate_readme.py`
+3. Open a PR with docs links and evaluation-only notes
 
-## Related projects
-
-| Project | How we differ |
-| --- | --- |
-| [cheahjs/free-llm-api-resources](https://github.com/cheahjs/free-llm-api-resources) | Broader (includes trial credits); we keep **permanent free only** + YAML SSOT + bilingual docs |
-| [mnfst/awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) | Awesome-list style; we focus on schema validation and generated READMEs |
-
-Thanks to those community efforts.
-
-## Maintenance
+## Reference style
 
 ```bash
-pip install -r requirements.txt
-python scripts/validate.py
-python scripts/generate_readme.py
+# qwen3.5-plus / qwen3.5-flash
+LLM_BASE_URL="https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run"
+LLM_MODEL_NAME="qwen3.5-plus"
 ```
+
+From: <https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api>
 
 ## License
 

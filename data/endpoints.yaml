@@ -1,0 +1,387 @@
+# Free Testing LLM APIs
+# 收录形态对齐 page-agent「Free Testing API」：
+# 给出可直接粘贴的 LLM_BASE_URL / LLM_MODEL_NAME（及可选 KEY）
+# 用途：技术评估 / Demo / R&D，默认不建议生产。
+#
+# 类别 category:
+#   project_demo     - 开源项目为自家 Demo 提供的官方测试接口
+#   anonymous_public - 无需注册/Key 的公开免费端点
+#   free_token       - 零成本领取免费 token 后即可测
+
+meta:
+  version: 2
+  updated: "2026-07-15"
+  focus_zh: "免费测试用 LLM API 端点（BASE_URL + MODEL 可复制），非「注册领永久 free tier」平台清单。"
+  focus_en: "Copy-paste free testing LLM endpoints (BASE_URL + MODEL), not permanent free-tier signup catalogs."
+  disclaimer_zh: "多数端点仅供技术评估；可能随时限流、变更或下线。禁止生产、禁止输入敏感数据。请遵守各项目使用条款。"
+  disclaimer_en: "Most endpoints are for technical evaluation only; may be rate-limited or removed anytime. Not for production or sensitive data. Follow each project's terms."
+
+endpoints:
+  # ── Project demo testing APIs ──────────────────────────────
+  - id: page-agent-qwen
+    name: Page Agent Free Testing API (Qwen)
+    name_zh: Page Agent 免费测试接口（通义千问）
+    category: project_demo
+    provider: Alibaba page-agent maintainers (via Alibaba Cloud FC + BaiLian)
+    region: CN
+    status: active
+    openai_compatible: true
+    api_key_required: false
+    base_url: https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run
+    chat_path_hint: /chat/completions
+    models:
+      - qwen3.5-plus
+      - qwen3.5-flash
+    source_docs: https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api
+    source_repo: https://github.com/alibaba/page-agent
+    terms: https://github.com/alibaba/page-agent/blob/main/docs/terms-and-privacy.md#2-testing-api-and-demo-disclaimer--terms-of-use
+    restrictions_zh: |
+      仅供 PageAgent.js / Extension 技术评估与 R&D。
+      禁止生产环境；禁止输入 PII/敏感数据；数据经中国大陆服务器处理。
+      代理会校验请求：首条需为 system/developer，且 system prompt 需匹配官方 page-agent 提示词（通用聊天可能被拒绝）。
+      可能随时限流或下线。
+    restrictions_en: |
+      Strictly for PageAgent.js / Extension technical evaluation and R&D.
+      No production use; no PII/sensitive data; processed via Mainland China servers.
+      Proxy validates requests: first message must be system/developer and system prompt must match official page-agent prompt (generic chat may be rejected).
+      May be rate-limited or discontinued without notice.
+    env:
+      LLM_BASE_URL: https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run
+      LLM_MODEL_NAME: qwen3.5-plus
+      # LLM_API_KEY: not required
+    last_verified: "2026-07-15"
+    tags: [page-agent, qwen, demo, no-key]
+
+  # ── Anonymous public free endpoints ────────────────────────
+  - id: ovhcloud-ai-endpoints-anonymous
+    name: OVHcloud AI Endpoints (Anonymous Free)
+    name_zh: OVHcloud AI Endpoints（匿名免费）
+    category: anonymous_public
+    provider: OVHcloud
+    region: EU
+    status: active
+    openai_compatible: true
+    api_key_required: false
+    base_url: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
+    chat_path_hint: /chat/completions
+    models:
+      - Meta-Llama-3_3-70B-Instruct
+      - Llama-3.1-8B-Instruct
+      - gpt-oss-120b
+      - gpt-oss-20b
+      - Qwen3-32B
+      - Qwen3-Coder-30B-A3B-Instruct
+      - Mistral-Small-3.2-24B-Instruct
+      - Mistral-Nemo-Instruct-2407
+      - Mistral-7B-Instruct-v0.3
+    source_docs: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/
+    source_repo: null
+    terms: https://www.ovhcloud.com/en/terms-and-conditions/
+    restrictions_zh: |
+      匿名档：无需注册、无需 API Key；约 2 RPM / IP / 模型（以官网为准）。
+      适合联调 OpenAI SDK / Agent 工具；更高配额需 OVH 账号与计费项目。
+      模型托管在欧盟。模型列表可能变更，请用 GET /v1/models 确认。
+    restrictions_en: |
+      Anonymous tier: no signup, no API key; about 2 RPM per IP per model (verify docs).
+      Good for wiring OpenAI SDK / agents; higher limits need OVH account + billing project.
+      EU-hosted. Catalog may change — check GET /v1/models.
+    env:
+      LLM_BASE_URL: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
+      LLM_MODEL_NAME: Meta-Llama-3_3-70B-Instruct
+      # LLM_API_KEY: not required for anonymous
+    last_verified: "2026-07-15"
+    tags: [ovh, eu, no-key, openai-compatible]
+
+  # ── Free token / low-friction testing ──────────────────────
+  - id: llm7
+    name: LLM7.io
+    name_zh: LLM7.io
+    category: free_token
+    provider: LLM7.io
+    region: GB
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://token.llm7.io
+    base_url: https://api.llm7.io/v1
+    chat_path_hint: /chat/completions
+    models:
+      - deepseek-v4-flash
+      - gemma3:27b
+      - gpt-5.4-mini
+      - kimi-k2.6
+      - minimax-m2.7
+    source_docs: https://llm7.io
+    source_repo: null
+    terms: https://llm7.io
+    restrictions_zh: |
+      可免费领取 token；基础访问与限额以官网为准（有 token 通常更高 RPM）。
+      第三方聚合网关，稳定性/合规/数据路径请自行评估；模型可用性会变。
+      适合快速打通 OpenAI 兼容客户端做联调测试。
+    restrictions_en: |
+      Free token available; limits per official site (token usually raises RPM).
+      Third-party gateway — evaluate stability, compliance, and data path yourself.
+      Model availability changes; good for quick OpenAI-compatible client tests.
+    env:
+      LLM_BASE_URL: https://api.llm7.io/v1
+      LLM_MODEL_NAME: deepseek-v4-flash
+      LLM_API_KEY: "<get free token at https://token.llm7.io>"
+    last_verified: "2026-07-15"
+    tags: [gateway, free-token, openai-compatible]
+
+  - id: openrouter-free-models
+    name: OpenRouter Free Models
+    name_zh: OpenRouter 免费模型（:free）
+    category: free_token
+    provider: OpenRouter
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://openrouter.ai/keys
+    base_url: https://openrouter.ai/api/v1
+    chat_path_hint: /chat/completions
+    models:
+      - openrouter/free
+      - meta-llama/llama-3.3-70b-instruct:free
+      - qwen/qwen3-coder:free
+      - openai/gpt-oss-20b:free
+      - google/gemma-4-31b-it:free
+    source_docs: https://openrouter.ai/docs
+    source_repo: null
+    terms: https://openrouter.ai/terms
+    restrictions_zh: |
+      注册即可拿 Key；调用模型名带 `:free` 后缀的免费模型（或 free router）。
+      默认日请求限额较低；免费路由可能记录提示词。仅建议开发测试。
+    restrictions_en: |
+      Free API key after signup; use models with `:free` suffix (or free router).
+      Low default daily limits; free providers may log prompts. For dev/testing.
+    env:
+      LLM_BASE_URL: https://openrouter.ai/api/v1
+      LLM_MODEL_NAME: openrouter/free
+      LLM_API_KEY: "<https://openrouter.ai/keys>"
+    last_verified: "2026-07-15"
+    tags: [openrouter, free-models, openai-compatible]
+
+  - id: groq-free
+    name: Groq Free Tier
+    name_zh: Groq 免费档
+    category: free_token
+    provider: Groq
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://console.groq.com/keys
+    base_url: https://api.groq.com/openai/v1
+    chat_path_hint: /chat/completions
+    models:
+      - llama-3.1-8b-instant
+      - llama-3.3-70b-versatile
+      - openai/gpt-oss-20b
+      - qwen/qwen3-32b
+    source_docs: https://console.groq.com/docs
+    source_repo: null
+    terms: https://groq.com/terms-of-use/
+    restrictions_zh: |
+      控制台免费创建 Key，无需绑卡即可测；有 RPM/TPM/RPD 限制。
+      适合速度敏感的联调；模型与配额以官方 rate limits 页为准。
+    restrictions_en: |
+      Free console key, typically no card for testing; RPM/TPM/RPD limits apply.
+      Great for latency-sensitive wiring; verify official rate-limits page.
+    env:
+      LLM_BASE_URL: https://api.groq.com/openai/v1
+      LLM_MODEL_NAME: llama-3.1-8b-instant
+      LLM_API_KEY: "<https://console.groq.com/keys>"
+    last_verified: "2026-07-15"
+    tags: [groq, free-tier, openai-compatible]
+
+  - id: google-ai-studio
+    name: Google AI Studio (Gemini Free)
+    name_zh: Google AI Studio（Gemini 免费）
+    category: free_token
+    provider: Google
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://aistudio.google.com/app/apikey
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    chat_path_hint: /chat/completions
+    models:
+      - gemini-2.5-flash
+      - gemini-2.5-flash-lite
+      - gemini-2.0-flash
+    source_docs: https://ai.google.dev/gemini-api/docs
+    source_repo: null
+    terms: https://ai.google.dev/gemini-api/terms
+    restrictions_zh: |
+      AI Studio 可免费创建 API Key；部分地区无免费档。
+      免费层数据使用/地区限制请读官方条款；配额按模型变化。
+    restrictions_en: |
+      Free API key via AI Studio; free tier unavailable in some regions.
+      Read ToS for data use / regional limits; quotas vary by model.
+    env:
+      LLM_BASE_URL: https://generativelanguage.googleapis.com/v1beta/openai
+      LLM_MODEL_NAME: gemini-2.5-flash
+      LLM_API_KEY: "<https://aistudio.google.com/app/apikey>"
+    last_verified: "2026-07-15"
+    tags: [gemini, free-tier, openai-compatible]
+
+  - id: github-models
+    name: GitHub Models
+    name_zh: GitHub Models
+    category: free_token
+    provider: GitHub
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://github.com/settings/tokens
+    base_url: https://models.github.ai/inference
+    chat_path_hint: /chat/completions
+    models:
+      - openai/gpt-4.1-mini
+      - openai/gpt-4o-mini
+      - meta/Llama-3.3-70B-Instruct
+      - deepseek/DeepSeek-R1
+    source_docs: https://docs.github.com/en/github-models
+    source_repo: null
+    terms: https://docs.github.com/en/site-policy
+    restrictions_zh: |
+      使用 GitHub Token（需 models 相关权限）即可原型测试。
+      限额与 Copilot 档位相关，单次输入输出上限较紧，适合功能验证。
+    restrictions_en: |
+      Use a GitHub token with models permissions for prototyping.
+      Limits depend on Copilot tier; strict per-request caps — good for feature tests.
+    env:
+      LLM_BASE_URL: https://models.github.ai/inference
+      LLM_MODEL_NAME: openai/gpt-4.1-mini
+      LLM_API_KEY: "<GitHub PAT with models access>"
+    last_verified: "2026-07-15"
+    tags: [github, free-token, openai-compatible]
+
+  - id: nvidia-nim
+    name: NVIDIA NIM (Developer Free)
+    name_zh: NVIDIA NIM（开发者免费）
+    category: free_token
+    provider: NVIDIA
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://build.nvidia.com/
+    base_url: https://integrate.api.nvidia.com/v1
+    chat_path_hint: /chat/completions
+    models:
+      - meta/llama-3.1-8b-instruct
+      - microsoft/phi-3-mini-4k-instruct
+      - google/gemma-2-9b-it
+    source_docs: https://docs.api.nvidia.com/
+    source_repo: null
+    terms: https://www.nvidia.com/en-us/about-nvidia/privacy-policy/
+    restrictions_zh: |
+      NVIDIA Developer 计划可免费调用部分模型；通常需注册/验证。
+      有速率限制，上下文可能较短，适合模型摸底测试。
+    restrictions_en: |
+      Free access for NVIDIA Developer Program members; signup/verification usual.
+      Rate-limited and often context-capped — fine for model smoke tests.
+    env:
+      LLM_BASE_URL: https://integrate.api.nvidia.com/v1
+      LLM_MODEL_NAME: meta/llama-3.1-8b-instruct
+      LLM_API_KEY: "<https://build.nvidia.com/>"
+    last_verified: "2026-07-15"
+    tags: [nvidia, free-token, openai-compatible]
+
+  - id: cerebras-free
+    name: Cerebras Inference Free
+    name_zh: Cerebras 免费推理
+    category: free_token
+    provider: Cerebras
+    region: US
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://cloud.cerebras.ai/
+    base_url: https://api.cerebras.ai/v1
+    chat_path_hint: /chat/completions
+    models:
+      - llama3.1-8b
+      - gpt-oss-120b
+    source_docs: https://inference-docs.cerebras.ai/
+    source_repo: null
+    terms: https://www.cerebras.ai/terms-of-service
+    restrictions_zh: |
+      免费档 Key；超高吞吐，适合压测客户端与流式输出。
+      免费模型列表与上下文上限可能突然变更。
+    restrictions_en: |
+      Free-tier key; very high throughput for client/streaming tests.
+      Free model list and context caps can change abruptly.
+    env:
+      LLM_BASE_URL: https://api.cerebras.ai/v1
+      LLM_MODEL_NAME: llama3.1-8b
+      LLM_API_KEY: "<https://cloud.cerebras.ai/>"
+    last_verified: "2026-07-15"
+    tags: [cerebras, free-tier, openai-compatible]
+
+  - id: siliconflow-free-models
+    name: SiliconFlow Free Models
+    name_zh: 硅基流动免费模型
+    category: free_token
+    provider: SiliconFlow
+    region: CN
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://cloud.siliconflow.cn/account/ak
+    base_url: https://api.siliconflow.cn/v1
+    chat_path_hint: /chat/completions
+    models:
+      - Qwen/Qwen3-8B
+      - deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+    source_docs: https://docs.siliconflow.cn/
+    source_repo: null
+    terms: https://docs.siliconflow.cn/
+    restrictions_zh: |
+      注册后创建 Key；部分模型永久免费，其余计费。
+      以控制台标注的免费模型为准，适合国内网络环境联调。
+    restrictions_en: |
+      Create a key after signup; some models permanently free, others paid.
+      Trust console free-model labels; convenient for CN network testing.
+    env:
+      LLM_BASE_URL: https://api.siliconflow.cn/v1
+      LLM_MODEL_NAME: Qwen/Qwen3-8B
+      LLM_API_KEY: "<https://cloud.siliconflow.cn/account/ak>"
+    last_verified: "2026-07-15"
+    tags: [china, free-models, openai-compatible]
+
+  - id: zhipu-flash-free
+    name: Z.AI / Zhipu Free Flash Models
+    name_zh: 智谱 Z.AI 免费 Flash 模型
+    category: free_token
+    provider: Zhipu / Z.AI
+    region: CN
+    status: active
+    openai_compatible: true
+    api_key_required: true
+    api_key_url: https://open.bigmodel.cn/usercenter/apikeys
+    base_url: https://open.bigmodel.cn/api/paas/v4
+    chat_path_hint: /chat/completions
+    models:
+      - glm-4.7-flash
+      - glm-4.6v-flash
+    source_docs: https://docs.bigmodel.cn/
+    source_repo: null
+    terms: https://open.bigmodel.cn/
+    restrictions_zh: |
+      官方提供永久免费 Flash 类模型；并发/配额以控制台为准。
+      适合中文场景功能验证。
+    restrictions_en: |
+      Official permanent free Flash-class models; concurrency/quotas per console.
+      Useful for Chinese-language feature validation.
+    env:
+      LLM_BASE_URL: https://open.bigmodel.cn/api/paas/v4
+      LLM_MODEL_NAME: glm-4.7-flash
+      LLM_API_KEY: "<https://open.bigmodel.cn/usercenter/apikeys>"
+    last_verified: "2026-07-15"
+    tags: [china, glm, free-models, openai-compatible]

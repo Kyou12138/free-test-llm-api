@@ -1,85 +1,56 @@
 # Contributing / 贡献指南
 
-[English](#english) · [中文](#中文)
-
----
-
 ## 中文
 
-感谢贡献！本仓库只收录 **永久免费档** 的官方/主流 LLM API。
+本仓库收录 **免费测试用 LLM API 端点**（可复制 `LLM_BASE_URL` + `LLM_MODEL_NAME`），形态参考：
+
+https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api
 
 ### 收录标准
 
-**可以加：**
-- 模型厂商官方 API 的持续免费档
-- 主流推理平台的持续免费档（有公开文档）
-- 字段尽量完整：文档链接、base URL、速率摘要、示例模型
+| 类别 | 说明 |
+| --- | --- |
+| `project_demo` | 开源项目为 Demo/技术评估提供的官方测试接口 |
+| `anonymous_public` | 无需注册、无需 Key 的公开免费端点 |
+| `free_token` | 可免费拿 Key/Token 后立刻测试的 OpenAI 兼容端点 |
 
-**不要加：**
-- 仅有注册试用额度、无持续 free tier
-- 非官方反代 / 共享 Key / 爬聊天网页
-- 无法核实的“听说免费”
+**拒绝：** 非官方反代、共享 Key、爬网页聊天、无法核实来源。
 
 ### 流程
 
-1. Fork 本仓库
-2. 编辑 **`data/providers.yaml`**（唯一数据源）
-3. 本地校验与生成：
-
 ```bash
+# 1. 编辑数据
+# data/endpoints.yaml
+
+# 2. 校验 + 生成 README
 pip install -r requirements.txt
 python scripts/validate.py
 python scripts/generate_readme.py
+
+# 3. PR 必须包含 endpoints.yaml 与生成后的 README
 ```
 
-4. 提交时包含：`providers.yaml` + 生成后的 `README.md` / `README.en.md`
-5. 打开 PR，说明：官网依据、是否永久免费、`last_verified` 日期
+每条必须有：
 
-### 字段提示
-
-- `type`: `model_vendor` | `inference_platform`
-- `free_tier.permanent` 必须为 `true`
-- `last_verified` 用 `YYYY-MM-DD`
-- `status`: `active` | `limited` | `unknown`
-- 配额写 **摘要 + 提醒以官网为准**，避免把过时数字写成保证
+- `base_url` / `models` / `source_docs`
+- `env.LLM_BASE_URL` + `env.LLM_MODEL_NAME`
+- `restrictions_zh` + `restrictions_en`（写清是否仅技术评估、地区、限流）
+- `last_verified: YYYY-MM-DD`
 
 ---
 
 ## English
 
-Thanks for contributing! This repo lists **permanent free tiers** only.
+We catalog **free testing LLM endpoints** (copy-paste `LLM_BASE_URL` + `LLM_MODEL_NAME`), in the spirit of Page Agent's Free Testing API.
 
-### Criteria
+### Categories
 
-**Accept:**
-- Model-vendor official APIs with ongoing free tiers
-- Mainstream inference platforms with ongoing free tiers and public docs
-- Complete fields: docs, base URL, rate summary, sample models
+- `project_demo` — official demo/eval endpoints from open-source projects  
+- `anonymous_public` — no signup / no key public free endpoints  
+- `free_token` — free key/token, OpenAI-compatible testing  
 
-**Reject:**
-- Trial credits only (no ongoing free tier)
-- Unofficial reverse proxies / shared keys / scraped chat UIs
-- Unverifiable “someone said it’s free”
+**Reject:** unofficial reverse proxies, shared keys, scraped chat UIs, unverifiable sources.
 
 ### Workflow
 
-1. Fork
-2. Edit **`data/providers.yaml`** (SSOT)
-3. Validate & regenerate:
-
-```bash
-pip install -r requirements.txt
-python scripts/validate.py
-python scripts/generate_readme.py
-```
-
-4. Commit `providers.yaml` + generated READMEs
-5. Open a PR with evidence links, permanence rationale, and `last_verified`
-
-### Field tips
-
-- `type`: `model_vendor` | `inference_platform`
-- `free_tier.permanent` must be `true`
-- `last_verified`: `YYYY-MM-DD`
-- `status`: `active` | `limited` | `unknown`
-- Rate limits are **summaries**, not guarantees — always point readers to official docs
+Edit `data/endpoints.yaml` → `validate.py` → `generate_readme.py` → PR.
