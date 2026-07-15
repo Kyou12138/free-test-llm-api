@@ -1,30 +1,29 @@
 [
   {
-    "name": "Page Agent 测试接口",
+    "name": "Page Agent",
     "base_url": "https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run",
     "api_key": null,
     "models": ["qwen3.5-plus", "qwen3.5-flash"],
     "china_direct": true,
-    "note": "无需 Key；仅 Page Agent 技术评估，有 system prompt 限制",
+    "note": "无需 Key；仅 Page Agent 评估；有 system prompt 限制",
     "copy": "OPENAI_BASE_URL=https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run\nOPENAI_API_KEY=\nOPENAI_MODEL=qwen3.5-plus"
   },
   {
-    "name": "OVHcloud 匿名端点",
+    "name": "OVHcloud 匿名",
     "base_url": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "api_key": null,
     "models": [
       "gpt-oss-20b",
       "gpt-oss-120b",
       "Meta-Llama-3_3-70B-Instruct",
-      "Mistral-Small-3.2-24B-Instruct-2506",
       "Qwen3-32B",
       "Qwen3-Coder-30B-A3B-Instruct",
       "Qwen3.5-9B",
-      "Qwen3.5-397B-A17B",
-      "Qwen3.6-27B"
+      "Qwen3.6-27B",
+      "Mistral-Small-3.2-24B-Instruct-2506"
     ],
     "china_direct": false,
-    "note": "无需注册/Key；约 2RPM/IP/模型；EU；国内可能需代理",
+    "note": "无需 Key；约 2RPM/IP/模型；EU",
     "copy": "OPENAI_BASE_URL=https://oai.endpoints.kepler.ai.cloud.ovh.net/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=gpt-oss-20b"
   },
   {
@@ -33,7 +32,16 @@
     "api_key": null,
     "models": ["openai"],
     "china_direct": false,
-    "note": "无需 Key；国际节点；模型列表会变",
+    "note": "无需 Key；国际节点",
     "copy": "OPENAI_BASE_URL=https://text.pollinations.ai/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=openai"
+  },
+  {
+    "name": "AI Horde",
+    "base_url": "https://oai.aihorde.net/v1",
+    "api_key": "0000000000",
+    "models": ["koboldcpp/Llama-3.2-3B"],
+    "china_direct": false,
+    "note": "固定匿名 Key 0000000000；社区算力；max_tokens>=16；模型列表会变",
+    "copy": "OPENAI_BASE_URL=https://oai.aihorde.net/v1\nOPENAI_API_KEY=0000000000\nOPENAI_MODEL=koboldcpp/Llama-3.2-3B"
   }
 ]

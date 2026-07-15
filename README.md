@@ -1,15 +1,18 @@
 # free-test-llm-api
 
-**免注册、免申请 Key**（或 Key 可留空）的免费测试 LLM 接口。  
-复制就能调。仅供技术测试，勿上生产。
+**不用去申请个人 Key** 的免费测试 LLM 接口（Key 为空，或文档公布的**固定匿名 Key**）。
+
+> 这类接口本身就很少。下面都是能直接复制用的，仅供测试。
 
 ---
 
-## 1. Page Agent 测试接口（国内）
+## 1. Page Agent（国内服务器）
 
-- 文档：https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api  
-- **无需 Key**  
-- 注意：校验官方 system prompt，主要给 Page Agent 评估用，**不是通用聊天**
+文档：https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api  
+
+- 无需 Key  
+- 国内可访问  
+- 有 system prompt 限制，给 Page Agent 评估用，不是通用聊天
 
 ```env
 OPENAI_BASE_URL=https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run
@@ -17,16 +20,18 @@ OPENAI_API_KEY=
 OPENAI_MODEL=qwen3.5-plus
 ```
 
-可用模型：`qwen3.5-plus` · `qwen3.5-flash`
+模型：`qwen3.5-plus` · `qwen3.5-flash`
 
 ---
 
-## 2. OVHcloud 匿名端点（无需 Key）
+## 2. OVHcloud 匿名（无需 Key）
 
-- 目录：https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/  
-- **无需注册、无需 Key**  
-- 约 2 RPM / IP / 模型  
-- 服务器在欧盟，**国内可能需代理**
+目录：https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/  
+
+- 无需注册、无需 Key  
+- 约 2 次/分钟/IP/模型  
+- 欧盟节点，**国内可能要代理**  
+- 不要乱填假 Key（会 403），Key 留空即可
 
 ```env
 OPENAI_BASE_URL=https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
@@ -34,21 +39,18 @@ OPENAI_API_KEY=
 OPENAI_MODEL=gpt-oss-20b
 ```
 
-可用模型（节选）：
+模型示例：
 
 ```text
 gpt-oss-20b
 gpt-oss-120b
 Meta-Llama-3_3-70B-Instruct
-Mistral-Small-3.2-24B-Instruct-2506
 Qwen3-32B
 Qwen3-Coder-30B-A3B-Instruct
 Qwen3.5-9B
-Qwen3.5-397B-A17B
 Qwen3.6-27B
+Mistral-Small-3.2-24B-Instruct-2506
 ```
-
-查全量：
 
 ```bash
 curl https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/models
@@ -58,9 +60,10 @@ curl https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/models
 
 ## 3. Pollinations（无需 Key）
 
-- 站点：https://pollinations.ai/  
-- **无需 Key** 可调 OpenAI 兼容接口  
-- 国际节点，**国内可能需代理**；稳定性不保证
+站点：https://pollinations.ai/  
+
+- 无需 Key  
+- 国际节点，**国内可能要代理**
 
 ```env
 OPENAI_BASE_URL=https://text.pollinations.ai/v1
@@ -68,7 +71,7 @@ OPENAI_API_KEY=
 OPENAI_MODEL=openai
 ```
 
-或：
+也可：
 
 ```env
 OPENAI_BASE_URL=https://text.pollinations.ai/openai
@@ -76,62 +79,72 @@ OPENAI_API_KEY=
 OPENAI_MODEL=openai
 ```
 
-模型名以他们当前开放列表为准，常见可试 `openai`。
-
 ---
 
-## 调用示例（复制即测）
+## 4. AI Horde（固定匿名 Key）
+
+文档：https://oai.aihorde.net/  
+
+- 官方允许匿名 Key：`0000000000`（优先级最低、更慢）  
+- 社区算力，模型随时上下线  
+- **国内可能要代理**  
+- `max_tokens` 建议 ≥ 16
+
+```env
+OPENAI_BASE_URL=https://oai.aihorde.net/v1
+OPENAI_API_KEY=0000000000
+OPENAI_MODEL=koboldcpp/Llama-3.2-3B
+```
+
+查当前模型：
 
 ```bash
-export OPENAI_BASE_URL=https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
-export OPENAI_MODEL=gpt-oss-20b
+curl https://oai.aihorde.net/v1/models -H "Authorization: Bearer 0000000000"
+```
 
-curl "$OPENAI_BASE_URL/chat/completions" \
+---
+
+## 一键测试
+
+```bash
+# OVH 示例（无 Key）
+curl "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions" \
   -H "Content-Type: application/json" \
-  -d "{\"model\":\"$OPENAI_MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"你好\"}],\"max_tokens\":64}"
+  -d '{"model":"gpt-oss-20b","messages":[{"role":"user","content":"你好"}],"max_tokens":64}'
 ```
 
-Python：
-
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    api_key="not-needed",  # 无 Key 时随便填非空占位；部分端点可留空
-)
-print(client.chat.completions.create(
-    model="gpt-oss-20b",
-    messages=[{"role": "user", "content": "你好"}],
-).choices[0].message.content)
+```bash
+# AI Horde 示例（固定 Key）
+curl "https://oai.aihorde.net/v1/chat/completions" \
+  -H "Authorization: Bearer 0000000000" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"koboldcpp/Llama-3.2-3B","messages":[{"role":"user","content":"你好"}],"max_tokens":32}'
 ```
-
-> 说明：有的 SDK 强制 `api_key` 非空，可写 `not-needed` / `sk-no-key`；  
-> OVH 实测：**不带 Authorization** 或 `Bearer ` 空串可以，**假 Key 反而 403**。
 
 ---
 
-## 速查（全是测试口，不用去领 Key）
+## 速查
 
-| 名称 | Base URL | Key | Model 示例 | 国内 |
+| 名称 | Base URL | Key | 示例 Model | 国内 |
 | --- | --- | --- | --- | --- |
-| Page Agent | `https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run` | 无 | `qwen3.5-plus` | ✅ 直连（限 Page Agent） |
-| OVH 匿名 | `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1` | 无 | `gpt-oss-20b` | ⚠️ 可能需代理 |
-| Pollinations | `https://text.pollinations.ai/v1` | 无 | `openai` | ⚠️ 可能需代理 |
+| Page Agent | `…fcapp.run` | 无 | `qwen3.5-plus` | ✅（限评估） |
+| OVH 匿名 | `…ovh.net/v1` | 无 | `gpt-oss-20b` | ⚠️ 可能代理 |
+| Pollinations | `text.pollinations.ai/v1` | 无 | `openai` | ⚠️ 可能代理 |
+| AI Horde | `oai.aihorde.net/v1` | **固定** `0000000000` | `koboldcpp/Llama-3.2-3B` | ⚠️ 可能代理 |
 
 ---
 
-## 不收录
+## 为什么这么少？
 
-- 要去官网注册才能领个人 Key 的（硅基流动、智谱、百炼、DeepSeek…）
-- 非官方盗 Key / 反代共享站
-- 不能 OpenAI 兼容、无法直接复制调用的纯网页
+「免 Key / 固定 Key + OpenAI 兼容 + 还能长期公开」的官方测试口本来就极少：
 
----
+- 厂商怕滥用，一般让你注册领个人 Key  
+- 国内能直连的公开测试口，目前明确可用的主要是 **Page Agent**（且有用途限制）  
+- 通用聊天免 Key：多在海外（OVH / Pollinations / Horde）
 
-## 数据文件
+**不收录：** 注册领个人 Key、盗 Key、非官方反代。
 
-[`apis.json`](./apis.json)
+有新的「免申请 / 固定 Key」接口欢迎 PR：改 `README.md` + `apis.json` 即可。
 
 ## License
 
