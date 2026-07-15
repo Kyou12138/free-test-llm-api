@@ -1,0 +1,50 @@
+[
+  {
+    "name": "硅基流动 SiliconFlow",
+    "base_url": "https://api.siliconflow.cn/v1",
+    "api_key_url": "https://cloud.siliconflow.cn/account/ak",
+    "models": ["Qwen/Qwen3-8B", "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"],
+    "china": true,
+    "note": "控制台标注免费的模型"
+  },
+  {
+    "name": "智谱 Z.AI",
+    "base_url": "https://open.bigmodel.cn/api/paas/v4",
+    "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
+    "models": ["glm-4.7-flash", "glm-4-flash", "glm-4.6v-flash"],
+    "china": true,
+    "note": "Flash 系列常年免费"
+  },
+  {
+    "name": "魔搭 ModelScope",
+    "base_url": "https://api-inference.modelscope.cn/v1",
+    "api_key_url": "https://modelscope.cn/my/myaccesstoken",
+    "models": ["Qwen/Qwen2.5-7B-Instruct"],
+    "china": true,
+    "note": "需实名，日配额有限"
+  },
+  {
+    "name": "阿里云百炼",
+    "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "api_key_url": "https://bailian.console.aliyun.com/",
+    "models": ["qwen-plus", "qwen-turbo", "qwen-flash"],
+    "china": true,
+    "note": "新用户免费额度"
+  },
+  {
+    "name": "Page Agent 测试接口",
+    "base_url": "https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run",
+    "api_key_url": null,
+    "models": ["qwen3.5-plus", "qwen3.5-flash"],
+    "china": true,
+    "note": "无需 Key；仅 Page Agent 技术评估，有 system prompt 限制"
+  },
+  {
+    "name": "DeepSeek",
+    "base_url": "https://api.deepseek.com",
+    "api_key_url": "https://platform.deepseek.com/api_keys",
+    "models": ["deepseek-chat", "deepseek-reasoner"],
+    "china": true,
+    "note": "注册送额度，用完需充值"
+  }
+]
