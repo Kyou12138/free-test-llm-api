@@ -1,6 +1,6 @@
-# 免费测试 LLM API
+# free-test-llm-api
 
-> 收集 **可直接粘贴使用** 的免费测试接口：`LLM_BASE_URL` + `LLM_MODEL_NAME`
+> 收集 **可直接粘贴使用** 的免费测试 LLM API：`LLM_BASE_URL` + `LLM_MODEL_NAME`
 >
 > 形态对齐 [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)
 

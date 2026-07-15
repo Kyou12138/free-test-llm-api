@@ -1,8 +1,8 @@
-# Free LLM API Catalog — Design Spec
+# Free LLM API Catalog — Design Spec (superseded)
 
 **Date:** 2026-07-15  
-**Status:** Approved  
-**Repo:** free-llm
+**Status:** Superseded by free-testing-llm-api design  
+**Repo:** free-test-llm-api
 
 ## Goal
 

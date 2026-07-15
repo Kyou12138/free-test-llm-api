@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/local/free-llm/schema/endpoint.schema.json",
+  "$id": "https://github.com/Kyou12138/free-test-llm-api/schema/endpoint.schema.json",
   "title": "FreeTestingLLMEndpoint",
   "type": "object",
   "additionalProperties": false,

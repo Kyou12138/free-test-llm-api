@@ -1,7 +1,8 @@
 # Free Testing LLM API Catalog — Design (v2)
 
 **Date:** 2026-07-15  
-**Status:** Active (replaces permanent free-tier catalog design)
+**Status:** Active (replaces permanent free-tier catalog design)  
+**Repo:** free-test-llm-api
 
 ## Problem
 

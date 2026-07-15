@@ -1,6 +1,6 @@
-# Free Testing LLM APIs
+# free-test-llm-api
 
-> Catalog of **copy-paste** free testing endpoints: `LLM_BASE_URL` + `LLM_MODEL_NAME`
+> Catalog of **copy-paste** free testing LLM APIs: `LLM_BASE_URL` + `LLM_MODEL_NAME`
 >
 > Inspired by [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)
 

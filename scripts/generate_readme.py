@@ -161,9 +161,9 @@ curl "$LLM_BASE_URL/chat/completions" \\
 def generate_zh(meta: dict, endpoints: list) -> str:
     updated = meta.get("updated", "")
     parts = [
-        "# 免费测试 LLM API",
+        "# free-test-llm-api",
         "",
-        "> 收集 **可直接粘贴使用** 的免费测试接口：`LLM_BASE_URL` + `LLM_MODEL_NAME`",
+        "> 收集 **可直接粘贴使用** 的免费测试 LLM API：`LLM_BASE_URL` + `LLM_MODEL_NAME`",
         ">",
         "> 形态对齐 [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)",
         "",
@@ -232,9 +232,9 @@ def generate_zh(meta: dict, endpoints: list) -> str:
 def generate_en(meta: dict, endpoints: list) -> str:
     updated = meta.get("updated", "")
     parts = [
-        "# Free Testing LLM APIs",
+        "# free-test-llm-api",
         "",
-        "> Catalog of **copy-paste** free testing endpoints: `LLM_BASE_URL` + `LLM_MODEL_NAME`",
+        "> Catalog of **copy-paste** free testing LLM APIs: `LLM_BASE_URL` + `LLM_MODEL_NAME`",
         ">",
         "> Inspired by [Page Agent · Free Testing API](https://alibaba.github.io/page-agent/docs/features/models/#free-testing-api)",
         "",
