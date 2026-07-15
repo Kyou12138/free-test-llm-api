@@ -1,5 +1,6 @@
 [
   {
+    "category": "project_demo",
     "name": "Page Agent",
     "base_url": "https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run",
     "api_key": null,
@@ -9,15 +10,28 @@
     "copy": "OPENAI_BASE_URL=https://page-ag-testing-ohftxirgbn.cn-shanghai.fcapp.run\nOPENAI_API_KEY=\nOPENAI_MODEL=qwen3.5-plus"
   },
   {
+    "category": "project_demo",
+    "name": "LangChain4j Demo",
+    "base_url": "http://langchain4j.dev/demo/openai/v1",
+    "api_key": "demo",
+    "models": ["gpt-4o-mini"],
+    "china_direct": false,
+    "source": "https://github.com/langchain4j/langchain4j",
+    "note": "官方文档：apiKey=demo 走体验代理；偶发 502；优先用 http",
+    "copy": "OPENAI_BASE_URL=http://langchain4j.dev/demo/openai/v1\nOPENAI_API_KEY=demo\nOPENAI_MODEL=gpt-4o-mini"
+  },
+  {
+    "category": "anonymous_public",
     "name": "OVHcloud 匿名",
     "base_url": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "api_key": null,
-    "models": ["gpt-oss-20b", "gpt-oss-120b", "Meta-Llama-3_3-70B-Instruct", "Qwen3-32B", "Qwen3.6-27B"],
+    "models": ["gpt-oss-20b", "gpt-oss-120b", "Meta-Llama-3_3-70B-Instruct", "Qwen3-32B"],
     "china_direct": false,
     "source": "https://github.com/tashfeenahmed/freellmapi",
     "copy": "OPENAI_BASE_URL=https://oai.endpoints.kepler.ai.cloud.ovh.net/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=gpt-oss-20b"
   },
   {
+    "category": "anonymous_public",
     "name": "Pollinations",
     "base_url": "https://text.pollinations.ai/openai/v1",
     "api_key": null,
@@ -27,15 +41,17 @@
     "copy": "OPENAI_BASE_URL=https://text.pollinations.ai/openai/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=openai-fast"
   },
   {
+    "category": "anonymous_public",
     "name": "Kilo Gateway",
     "base_url": "https://api.kilo.ai/api/gateway/v1",
     "api_key": null,
-    "models": ["kilo-auto/free", "openrouter/free", "tencent/hy3:free", "stepfun/step-3.7-flash:free"],
+    "models": ["kilo-auto/free", "openrouter/free"],
     "china_direct": false,
     "source": "https://github.com/tashfeenahmed/freellmapi",
     "copy": "OPENAI_BASE_URL=https://api.kilo.ai/api/gateway/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=kilo-auto/free"
   },
   {
+    "category": "anonymous_public",
     "name": "LLM7 匿名模型",
     "base_url": "https://api.llm7.io/v1",
     "api_key": null,
@@ -45,6 +61,7 @@
     "copy": "OPENAI_BASE_URL=https://api.llm7.io/v1\nOPENAI_API_KEY=\nOPENAI_MODEL=gemma3:27b"
   },
   {
+    "category": "anonymous_public",
     "name": "AI Horde",
     "base_url": "https://oai.aihorde.net/v1",
     "api_key": "0000000000",
